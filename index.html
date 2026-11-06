@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E8F2FB">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -94,6 +95,7 @@ h1{font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;font-weight:600;text
 .dot{width:10px;height:10px;border-radius:50%}
 .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .tabs button{appearance:none;color:var(--ink);border-radius:22px;padding:12px 10px;font-size:18px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.25}
+.tabs button .ts{display:none}
 .tabs button small{font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:400}
 .tabs button[aria-selected="true"]{background:linear-gradient(120deg,color-mix(in srgb,var(--sky) 22%,var(--glass-strong)),color-mix(in srgb,var(--accent2) 18%,var(--glass-strong)));color:var(--sky);border-color:color-mix(in srgb,var(--sky) 35%,transparent);box-shadow:0 10px 24px color-mix(in srgb,var(--sky) 18%,transparent),inset 0 1px 0 rgba(255,255,255,.5)}
 .tabs button[aria-selected="true"] small{color:var(--muted)}
@@ -196,6 +198,40 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
   .p{font-size:13.5px;padding:1px 7px}
 }
 @media (max-width:430px){.lede{display:none} h1{font-size:18px;white-space:nowrap}}
+@media (max-width:640px){
+  .wrap{gap:12px;padding-block:10px 40px}
+  .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:5px;border-radius:22px;
+    background:var(--glass-strong);border:1px solid var(--glass-border);-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);box-shadow:0 8px 24px rgba(0,0,0,.10)}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button .tl{display:none}
+  .tabs button .ts{display:inline}
+  .tabs button{flex:1 1 0;min-width:0;padding:7px 4px;font-size:15px;white-space:nowrap;border-radius:17px;background:transparent;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .tabs button small{font-size:11px}
+  .controls{gap:8px}
+  .filters{width:100%;justify-content:space-between}
+  .filters button{flex:1;padding:8px 6px;font-size:14px}
+  .search{flex-basis:100%}
+  .search input{padding:10px 16px}
+  .legend{display:none}
+  .sumbar{gap:8px}
+  .sumbar .summary{flex-basis:100%}
+  .summary{flex-wrap:nowrap;overflow-x:auto;gap:12px;padding:8px 14px;font-size:12.5px;white-space:nowrap;scrollbar-width:none}
+  .summary::-webkit-scrollbar{display:none}
+  .summary strong{font-size:17px}
+  .dl{width:100%;display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:6px}
+  .dl button{justify-content:center;padding:10px 8px;font-size:13.5px}
+  .dl button[hidden]+button.all,.dl:has(button[hidden]) {grid-template-columns:1fr}
+  .unit h2{padding:12px 14px 10px}
+  .loc{margin:0 10px 10px;font-size:13px}
+  .loc .carn{margin-left:0}
+  .cols{grid-template-columns:70px 1fr 1fr}
+  .cols>.role{font-size:12px}
+  .finder{padding:12px 14px;font-size:13.5px}
+  .finder ul{padding-left:16px}
+  .coord{padding:12px 14px;gap:8px 16px}
+  .roster td:first-child,.roster th:first-child{position:sticky;left:0;z-index:1;background:var(--glass-strong)}
+  .roster th:first-child{z-index:2}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -339,7 +375,7 @@ function renderRoster(){
   document.getElementById("rwrap").innerHTML=`<table class="roster"><thead>${head}</thead><tbody>${body}</tbody></table>`;
 }
 function render(){
-  document.getElementById("tabs").innerHTML=DATA.map((d,i)=>`<button role="tab" aria-selected="${i===day}" data-i="${i}">${DTAB[i]||d.day}<small>${d.mobiles.length} โมบาย</small></button>`).join("")+`<button role="tab" class="sum" aria-selected="${day===DATA.length}" data-i="${DATA.length}">สรุปรายคน<small>ทุกคน 3 วัน</small></button>`;
+  document.getElementById("tabs").innerHTML=DATA.map((d,i)=>`<button role="tab" aria-selected="${i===day}" data-i="${i}"><span class="tl">${DTAB[i]||d.day}</span><span class="ts">${DSHORT[i].replace(" 69","")}</span><small>${d.mobiles.length} โมบาย</small></button>`).join("")+`<button role="tab" class="sum" aria-selected="${day===DATA.length}" data-i="${DATA.length}"><span class="tl">สรุปรายคน</span><span class="ts">สรุป</span><small>ทุกคน</small></button>`;
   const isSum=day===DATA.length;
   ["grid","coord"].forEach(id=>document.getElementById(id).hidden=isSum);
   document.getElementById("rwrap").hidden=!isSum;
@@ -460,8 +496,8 @@ async function drawDayUI(di,opt={}){
   // card heights
   const LB=mi=>(LOC[di]||[])[mi]?52:0;
   const cardH=d.mobiles.map((_,mi)=>{let h=64+32+LB(mi);roles.forEach(r=>{const k=Math.max(1,r.cells[mi*2].length,r.cells[mi*2+1].length);h+=k*PH+(k-1)*PG+PADC*2});return h+8});
-  const rowsOfCards=[];for(let i=0;i<n;i+=COLS)rowsOfCards.push(d.mobiles.slice(i,i+COLS).map((_,j)=>i+j));
-  const headH=ONE?156:118, coordH=co&&co.cells[0].length?40+co.cells[0].length*30+16:0;
+  const IDX=opt.only||d.mobiles.map((_,i)=>i);const rowsOfCards=[];for(let i=0;i<IDX.length;i+=COLS)rowsOfCards.push(IDX.slice(i,i+COLS));
+  const headH=ONE?156:118, coordH=(opt.coord!==false)&&co&&co.cells[0].length?40+co.cells[0].length*30+16:0;
   const W=M*2+COLS*CW+(COLS-1)*G;
   let H=M+headH+G; rowsOfCards.forEach(r=>H+=Math.max(...r.map(i=>cardH[i]))+G); H+=coordH+M-G+ (coordH?G:0);
   const S=pickScale(W,H),c=document.createElement("canvas");c.width=Math.round(W*S);c.height=Math.round(H*S);const g=c.getContext("2d");g.scale(S,S);
@@ -539,7 +575,13 @@ async function drawDayUI(di,opt={}){
   return c;
 }
 
-function canvasJpegBytes(c){const b=atob(c.toDataURL("image/jpeg",0.96).split(",")[1]);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+async function dayPages(di){
+  // one A4-width page per group of cards, each rendered at full sharpness
+  const n=DATA[di].mobiles.length, pages=[];
+  for(let mi=0;mi<n;mi++)pages.push(await drawDayUI(di,{cols:1,only:[mi],coord:mi===n-1}));
+  return pages;
+}
+function canvasJpegBytes(c){const b=atob(c.toDataURL("image/jpeg",0.97).split(",")[1]);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
 function makePdf(canvases){
   // A4 landscape pages, one JPEG image per page, scaled to fit
   const PW=842, PH=595, MG=20, enc=new TextEncoder();
@@ -580,10 +622,10 @@ document.getElementById("dl").addEventListener("click",async e=>{
   btns.forEach(x=>x.disabled=true);
   try{
     let filename,data;
-    if(kind==="pdfall"){const cs=[];for(let i=0;i<DATA.length;i++)cs.push(await drawDayUI(i,{cols:1}));data=makePdf(cs);filename="แบ่งโม สพอ. 2569 (ทั้ง 3 วัน).pdf"}
+    if(kind==="pdfall"){const cs=[];for(let i=0;i<DATA.length;i++)cs.push(...await dayPages(i));data=makePdf(cs);filename="แบ่งโม สพอ. 2569 (ทั้ง 3 วัน).pdf"}
     else{const c=await drawDay(day);const dn=DATA[day].day;
       if(kind==="png"){const cu=await drawDayUI(day);data=await new Promise(r=>cu.toBlob(r,"image/png"));filename=`แบ่งโม สพอ. ${dn}.png`}
-      else{data=makePdf([await drawDayUI(day,{cols:1})]);filename=`แบ่งโม สพอ. ${dn}.pdf`}}
+      else{data=makePdf(await dayPages(day));filename=`แบ่งโม สพอ. ${dn}.pdf`}}
     const r=await downloads.save({filename,data});
     toast(r.status==="saved"?"บันทึกไฟล์แล้ว":"ส่งไฟล์แล้ว");
   }catch(err){
