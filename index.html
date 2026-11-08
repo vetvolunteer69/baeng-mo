@@ -93,7 +93,7 @@ h1{font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;font-weight:600;text
 .legend{display:flex;gap:8px;flex-wrap:wrap}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:13.5px;font-weight:500;background:var(--field);border:1px solid var(--glass-border)}
 .dot{width:10px;height:10px;border-radius:50%}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .tabs button{appearance:none;color:var(--ink);border-radius:22px;padding:12px 10px;font-size:18px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.25}
 .tabs button .ts{display:none}
 .tabs button small{font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:400}
@@ -120,6 +120,27 @@ h1{font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;font-weight:600;text
 .dl button:disabled{opacity:.5;cursor:progress}
 .dl button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .dl button.all{color:var(--sky)}
+.heads{border-radius:26px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.heads .hh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.heads .ht{font:500 19px var(--f-display)}
+.heads .hd2{font-size:13px;color:var(--muted)}
+.heads .hbtns{display:flex;gap:8px;flex-wrap:wrap}
+.heads .copy:disabled{opacity:.5;cursor:progress}
+.heads .copy{appearance:none;display:inline-flex;align-items:center;gap:7px;font:500 14px var(--f-body);color:var(--sky);padding:8px 14px;border-radius:999px;cursor:pointer;background:var(--glass-strong);border:1px solid var(--glass-border)}
+.heads .copy svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.heads .hday{display:flex;flex-direction:column;gap:8px}
+.heads .hdt{font:500 16px var(--f-display);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.heads .dpill{font:600 12px var(--f-body);color:var(--sky);background:color-mix(in srgb,var(--sky) 12%,var(--glass-strong));border:1px solid color-mix(in srgb,var(--sky) 25%,transparent);border-radius:999px;padding:2px 10px}
+.heads .hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:10px}
+.heads .hitem{background:var(--field);border:1px solid var(--glass-border);border-radius:18px;padding:10px 12px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.heads .hm{display:flex;gap:9px;align-items:center}
+.heads .hm .ico{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:500 14px var(--f-display);color:var(--sky);background:color-mix(in srgb,var(--sky) 14%,var(--glass-strong));border:1px solid color-mix(in srgb,var(--sky) 25%,transparent)}
+.heads .hm b{font:500 15px var(--f-display);display:block}
+.heads .hm small{display:block;font-size:12px;color:var(--muted);line-height:1.3}
+.heads .hrow{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.heads .lab{font-size:12px;font-weight:600;min-width:74px}
+.heads .lab.s{color:var(--sky)} .heads .lab.l{color:var(--grass)}
+.heads textarea{width:100%;min-height:140px;font:13px var(--f-body);border-radius:12px;padding:8px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--glass-strong);color:var(--ink);border:1px solid var(--glass-border);border-radius:999px;padding:9px 18px;font-size:14px;box-shadow:var(--shadow);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
 .summary strong{color:var(--ink);font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;margin:0 2px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,350px),1fr));gap:14px}
@@ -295,6 +316,7 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
       <button type="button" data-dl="pdfall" class="all"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/></svg><span>PDF ทั้ง 3 วัน</span></button>
     </div>
   </div>
+  <section class="heads" id="heads"></section>
   <div class="toast" id="toast" role="status" hidden></div>
   <div class="grid" id="grid"></div>
   <div class="coord" id="coord"></div>
@@ -302,13 +324,13 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
 </div>
 
 <script>
-const DATA=[{"day":"วันที่ 1","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จูนจี้ #5"],["จีน่า อาริญา #5"],["ชะเอม #5"],["แบม #5"],["ข้าวฟ่าง #5"],["เตย #5"],["จีน #5"],["ไบร์ท #5"],["แพนด้า #5"],["หิน #5"]]},{"role":"โต๊ะตรวจ","cells":[["โซด้า #5","โบว์ #5"],[],["บิ้วตี้ #5","อองฟอง #5"],[],["เปรม #5","เฟ #5"],[],["มิ้ง #5","อาย #5"],[],["แซน #5","โดนัท #5"],[]]},{"role":"บังคับสัตว์","cells":[["มิ้น #2","แคน #1"],["ฮัน #5","ตุลย์ #3","มิกกี้ #1"],["ซัน #3","มินนี่ #3"],["จิมมี่ #5","โมโต #3","มะปราง #1"],["รถจิ๊บ #3","สั้ม #3"],["ต้นกล้า #5","โด้ #3","เอม #2"],["พลอยสวย #1","ใหม่ #3"],["แนท ช #5","ต้นหลิว #3","ทับทิม #2"],["ภีม #3","น้ำชา #2"],["ข้าวตัง #5","เจ้าขา #3","จี #1"]]},{"role":"เวชภัณฑ์","cells":[["ช่อ #5","ข้าวปั้น #1"],["จีน่า นลิน #5","เม็ดนุ่น #3"],["แนท ญ #5","แพรวา #2"],["ต้นข้าว #2","แพลงก์ต้อล #3"],["เนม #5","บิวเกต #2"],["พิมมี่ #3","พราว #2"],["ปุ้ม #5","โดม #2"],["อิงฟ้า #1","ปิ่นปัก #3"],["อ๋อมแอ๋ม #5","ปัณปัณ #1"],["จา #5","บีมบีม #2"]]},{"role":"ทะเบียน","cells":[["ปอม #1"],["น้ำบี้ #2"],["ใบปอ #1"],["สตาร์ท #2"],["ไอติม #2"],["มิวตัง #1"],["แชมป์ #1"],["ไนซ์ #1"],["ติณณ์ #1"],["เซกิ #1"]]},{"role":"GB","cells":[["น้ำขิง #2"],[],["เฌอดา #2"],[],["มัดไหม #1"],[],["รุ้ง #2"],[],["โอม #2"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอน้ำใจ"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ไมกี้"],["หมอดวก"],["อ.มาย"],["อ.มาริ"],["หมออุ้ม"],["หมอกาฟิว"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["นาน่า #3"],["095-8571579"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 2","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จีน่า นลิน #5"],["อาย #5"],["พิม #5"],["ปุ้ม #5"],["แม็กซ์ #3"],["บลิส #3"],["เจ้าขา #3"],["แป้ง #3"],["โดนัท #5"],["แซน #5"]]},{"role":"โต๊ะตรวจ","cells":[["แบม #5","บิ้วตี้ #5"],[],["จีน่า อาริญา #5","เตย #5"],[],["ไข่มุก #3","มิ้นท์ #3"],[],["ปิ๋ม #3","พิมมี่ #3"],[],["แนท ญ #5","ตังเมย์ #5"],[]]},{"role":"บังคับสัตว์","cells":[["นาน่า #3","น้ำบี้ #2"],["เปรม #5","ภีม #3","มิวตัง #1"],["จี #1","ปัณปัณ #1"],["เนม #5","เฌอดา #2","สั้ม #3"],["ฮัน #5","แพนด้า #5"],["จาจา #5","มินนี่ #3","พราว #2"],["ไบร์ท #5","อองฟอง #5"],["โอม #2","ชะเอม #5","ใหม่ #3"],["ตุลย์ #3","อิงฟ้า #1"],["หิน #5","มิ้น #2","ติณณ์ #1"]]},{"role":"เวชภัณฑ์","cells":[["แพลงก์ต้อล #3","น้ำชา #2"],["โซด้า #5","มัดไหม #1"],["ต้นหลิว #3","แชมป์ #1"],["จีน #5","พลอยสวย #1"],["ปิ่นปัก #3","ไนซ์ #1"],["แนท ช #5","ซัน #3"],["เม็ดนุ่น #3","มะปราง #1"],["จูนจี้ #5"],["เซกิ #1","รถจิ๊บ #3"],["โบว์ #5","ข้าวปั้น #1"]]},{"role":"ทะเบียน","cells":[["ต้นข้าว #2"],["รุ้ง #2"],["บิวเกต #2"],["บีมบีม #2"],["มิกกี้ #1"],["ใบปอ #1"],["น้ำขิง #2"],["ไอติม #2"],["เอม #2"],["แพรวา #2"]]},{"role":"GB","cells":[["โดม #2"],[],["สตาร์ท #2"],[],["ทับทิม #2"],[],["ปอม #1"],[],["แคน #1"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ม้า"],["อ.พงษ์ธร"],["หมอพี"],["หมอกาฟิว"],["หมอเบส"],["หมอเชียร์"],["หมอโหน่ง"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["โด้ #3","โมโต #3"],["098-6518392","095-1748658"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 3","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4"],"roles":[{"role":"หัวหน้าโม","cells":[["นาน่า #3"],["สั้ม #3"],["มินนี่ #3"],["โด้ #3"],["โมโต #3"],["ตุลย์ #3"],["เปรม #5"],["ใหม่ #3"],[],[]]},{"role":"โต๊ะตรวจ","cells":[["ปิ่นปัก #3","ต้นหลิว #3"],[],["เม็ดนุ่น #3","รถจิ๊บ #3"],[],["แพลงก์ต้อล #3","เจ้าขา #3"],[],["ภีม #3","ซัน #3"],[],[],[]]},{"role":"บังคับสัตว์","cells":[["จูนจี้ #5","จีน่า นลิน #5"],["แซน #5","แชมป์ #1","ต้นข้าว #2"],["เนม #5","แนท ช #5"],["ไบร์ท #5","โดม #2","บิวเกต #2"],["อาย #5","จาจา #5"],["ฮัน #5","ข้าวปั้น #1","น้ำขิง #2"],["แนท ญ #5","จีน #5"],["น้ำชา #2","แบม #5","พลอยสวย #1"],[],[]]},{"role":"เวชภัณฑ์","cells":[["รุ้ง #2","ชะเอม #5","ไอติม #2"],["แพนด้า #5","แคน #1"],["พิมมี่ #3","มิ้น #2","อิงฟ้า #1"],["โดนัท #5","ติณณ์ #1"],["โซด้า #5","มิกกี้ #1","โอม #2"],["เอม #2","ปอม #1"],["อองฟอง #5","บีมบีม #2","ใบปอ #1"],["ทับทิม #2","ปัณปัณ #1"],[],[]]},{"role":"ทะเบียน","cells":[["แพรวา #2","ไนซ์ #1"],["โบว์ #5"],["มัดไหม #1","สตาร์ท #2"],["หิน #5"],["จี #1","น้ำบี้ #2"],["เตย #5"],["เฌอดา #2","เซกิ #1"],["จีน่า อาริญา #5"],[],[]]},{"role":"GB","cells":[["มิวตัง #1"],[],["บิ้วตี้ #5"],[],["มะปราง #1"],[],["พราว #2"],[],[],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["อ.มาริ"],["หมอฟลุ๊ค"],["หมอโบว์ลิ่ง"],["อ.พงษ์ธร"],["หมออุ้ม"],["หมอกรีน"],["หมอกาฟิว"],[],[]]},{"role":"ประสานงานนอกประจำวัน","cells":[["ปุ้ม #5"],["099-2709713"],[],[],[],[],[],[],[],[]]}]}];
+const DATA=[{"day":"วันที่ 1","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จูนจี้ #5"],["จีน่า อาริญา #5"],["ชะเอม #5"],["แบม #5"],["ข้าวฟ่าง #5"],["เตย #5"],["จีน #5"],["ไบร์ท #5"],["แพนด้า #5"],["หิน #5"]]},{"role":"โต๊ะตรวจ","cells":[["โซด้า #5","โบว์ #5"],[],["ช่อ #5","อองฟอง #5"],[],["เปรม #5","เฟ #5"],[],["มิ้ง #5","อาย #5"],[],["แซน #5","โดนัท #5"],[]]},{"role":"บังคับสัตว์","cells":[["มิ้น #2","แคน #1"],["ฮัน #5","ตุลย์ #3","นาโน #2"],["ซัน #3","มินนี่ #3"],["จิมมี่ #5","โมโต #3","มะปราง #1"],["พลอยสวย #1","สั้ม #3"],["ต้นกล้า #5","โด้ #3","เอม #2"],["รถจิ๊บ #3","ใหม่ #3"],["แนท ช #5","ต้นหลิว #3","ทับทิม #2"],["ภีม #3","น้ำชา #2"],["ข้าวตัง #5","เจ้าขา #3","ปังปอน #2"]]},{"role":"เวชภัณฑ์","cells":[["บิ้วตี้ #5","เม็ดนุ่น #3"],["จีน่า นลิน #5","มิกกี้ #1"],["แนท ญ #5","แพรวา #2"],["แพลงก์ต้อล #3"],["เนม #5","บิวเกต #2"],["พิมมี่ #3","พราว #2"],["ปุ้ม #5","โดม #2"],["อิงฟ้า #1","ปิ่นปัก #3"],["อ๋อมแอ๋ม #5","ปัณปัณ #1"],["จา #5","จี #1"]]},{"role":"ทะเบียน","cells":[["ปอม #1"],["น้ำบี้ #2"],["ติณณ์ #1"],["สตาร์ท #2"],["ไอติม #2"],["มัดไหม #1"],["แชมป์ #1"],["ไนซ์ #1"],["บีมบีม #2"],["เซกิ #1"]]},{"role":"GB","cells":[["น้ำขิง #2"],[],["เฌอดา #2"],[],["ต้นข้าว #2"],[],["รุ้ง #2"],[],["โอม #2"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอน้ำใจ"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ไมกี้"],["หมอดาด้า"],["อ.มาย"],["อ.มาริ"],["หมออุ้ม"],["หมอกาฟิว"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["นาน่า #3"],["095-8571579"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 2","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จีน่า นลิน #5"],["อาย #5"],["พิม #5"],["ปุ้ม #5"],["แม็กซ์ #3"],["บลิส #3"],["เจ้าขา #3"],["แป้ง #3"],["โดนัท #5"],["แซน #5"]]},{"role":"โต๊ะตรวจ","cells":[["แบม #5","บิ้วตี้ #5"],[],["จีน่า อาริญา #5","เตย #5"],[],["ไข่มุก #3","มิ้นท์ #3"],[],["ปิ๋ม #3","พิมมี่ #3"],[],["แนท ญ #5","ตังเมย์ #5"],[]]},{"role":"บังคับสัตว์","cells":[["จี #1","น้ำบี้ #2"],["เปรม #5","ภีม #3","มัดไหม #1"],["นาน่า #3","ปัณปัณ #1"],["เนม #5","เฌอดา #2","เม็ดนุ่น #3"],["ฮัน #5","แพนด้า #5"],["จาจา #5","มินนี่ #3","พราว #2"],["ไบร์ท #5","อองฟอง #5"],["โอม #2","ชะเอม #5","ใหม่ #3"],["ตุลย์ #3","อิงฟ้า #1"],["หิน #5","มิ้น #2","ติณณ์ #1"]]},{"role":"เวชภัณฑ์","cells":[["แพลงก์ต้อล #3","น้ำชา #2"],["โซด้า #5"],["ต้นหลิว #3","แชมป์ #1"],["จีน #5","ปังปอน #2"],["ปิ่นปัก #3","ไนซ์ #1"],["แนท ช #5","ซัน #3"],["สั้ม #3","มะปราง #1"],["จูนจี้ #5"],["เซกิ #1","รถจิ๊บ #3"],["โบว์ #5","นาโน #2"]]},{"role":"ทะเบียน","cells":[["ต้นข้าว #2"],["รุ้ง #2"],["บิวเกต #2"],["บีมบีม #2"],["มิกกี้ #1"],["พลอยสวย #1"],["น้ำขิง #2"],["ไอติม #2"],["เอม #2"],["แพรวา #2"]]},{"role":"GB","cells":[["โดม #2"],[],["สตาร์ท #2"],[],["ทับทิม #2"],[],["ปอม #1"],[],["แคน #1"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ม้า"],["อ.พงษ์ธร"],["หมอพี"],["หมอกาฟิว"],["หมอเบส"],["หมอเชียร์"],["หมอโหน่ง"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["โด้ #3","โมโต #3"],["098-6518392","095-1748658"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 3","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4"],"roles":[{"role":"หัวหน้าโม","cells":[["นาน่า #3"],["สั้ม #3"],["มินนี่ #3"],["โด้ #3"],["โมโต #3"],["ตุลย์ #3"],["เปรม #5"],["ใหม่ #3"],[],[]]},{"role":"โต๊ะตรวจ","cells":[["ปิ่นปัก #3","ต้นหลิว #3"],[],["เม็ดนุ่น #3","รถจิ๊บ #3"],[],["แพลงก์ต้อล #3","เจ้าขา #3"],[],["ภีม #3","ซัน #3"],[],[],[]]},{"role":"บังคับสัตว์","cells":[["จูนจี้ #5","จีน่า นลิน #5"],["แซน #5","แชมป์ #1","ต้นข้าว #2"],["เนม #5","แนท ช #5","ปังปอน #2"],["ไบร์ท #5","โดม #2","บิวเกต #2"],["อาย #5","จาจา #5"],["ฮัน #5","น้ำขิง #2"],["แนท ญ #5","จีน #5"],["น้ำชา #2","แบม #5","พลอยสวย #1"],[],[]]},{"role":"เวชภัณฑ์","cells":[["รุ้ง #2","ชะเอม #5","ไอติม #2"],["แพนด้า #5","แคน #1"],["พิมมี่ #3","มิ้น #2","อิงฟ้า #1"],["โดนัท #5","ติณณ์ #1"],["โซด้า #5","มิกกี้ #1","โอม #2"],["เอม #2","ปอม #1"],["อองฟอง #5","บีมบีม #2","นาโน #2"],["ทับทิม #2","ปัณปัณ #1"],[],[]]},{"role":"ทะเบียน","cells":[["แพรวา #2","ไนซ์ #1"],["โบว์ #5"],["สตาร์ท #2"],["หิน #5"],["จี #1","น้ำบี้ #2"],["เตย #5"],["เฌอดา #2","เซกิ #1"],["จีน่า อาริญา #5"],[],[]]},{"role":"GB","cells":[["มัดไหม #1"],[],["บิ้วตี้ #5"],[],["มะปราง #1"],[],["พราว #2"],[],[],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["อ.มาริ"],["หมอฟลุ๊ค"],["หมอโบว์ลิ่ง"],["อ.พงษ์ธร"],["หมอดวก"],["หมอกรีน"],["หมอกาฟิว"],[],[]]},{"role":"ประสานงานนอกประจำวัน","cells":[["ปุ้ม #5"],["099-2709713"],[],[],[],[],[],[],[],[]]}]}];
 const COORD="ประสานงานนอกประจำวัน";
 const DATES=["วันจันทร์ที่ 9 พฤศจิกายน 2569","วันอังคารที่ 10 พฤศจิกายน 2569","วันพุธที่ 11 พฤศจิกายน 2569"];
 const DSHORT=["จ. 9 พ.ย. 69","อ. 10 พ.ย. 69","พ. 11 พ.ย. 69"];
 const DTAB=["จันทร์ 9 พ.ย.","อังคาร 10 พ.ย.","พุธ 11 พ.ย."];
 DATA.forEach((d,i)=>{if(DATES[i])d.day=DATES[i]});
-const ROSTER=[["เซกิ","1"],["ติณณ์","1"],["มะปราง","1"],["มัดไหม","1"],["ปัณปัณ","1"],["มิกกี้","1"],["แคน","1"],["จี","1"],["มิวตัง","1"],["พลอยสวย","1"],["ปอม","1"],["ข้าวปั้น","1"],["อิงฟ้า","1"],["แชมป์","1"],["ใบปอ","1"],["ไนซ์","1"],["ไอติม","2"],["โอม","2"],["น้ำขิง","2"],["ทับทิม","2"],["พราว","2"],["มิ้น","2"],["สตาร์ท","2"],["บีมบีม","2"],["แพรวา","2"],["รุ้ง","2"],["เอม","2"],["บิวเกต","2"],["เฌอดา","2"],["น้ำชา","2"],["ต้นข้าว","2"],["น้ำบี้","2"],["โดม","2"],["บลิส","3"],["แป้ง","3"],["ปิ่นปัก","3"],["ไข่มุก","3"],["ต้นหลิว","3"],["พิม","3"],["โด้","3"],["มิ้นชี่","3"],["ตุลย์","3"],["โมโต","3"],["แม็กซ์","3"],["นาน่า","3"],["เม็ดนุ่น","3"],["รถจิ๊บ","3"],["เจ้าขา","3"],["ส้ม","3"],["เชียงใหม่","3"],["แพลงก์ต้อล","3"],["ซัน","3"],["ภีร","3"],["มินนี่","3"],["ปิ๋ม","3"],["ฮัน","5"],["โซด้า","5"],["แพนด้า","5"],["เตย","5"],["แบมบี้","5"],["แนท ช","5"],["บิวตี้","5"],["ต้นกล้า","5"],["นลิน","5"],["ข้าวฟ่าง","5"],["อ๋อมแอ๋ม","5"],["จิมมี่","5"],["จูนจี้","5"],["หิน","5"],["ไบร์ท","5"],["โบว์","5"],["อองฟอง","5"],["เปรม","5"],["จีน่า","5"],["จาจ้า","5"],["อาย","5"],["แซนด์","5"],["ช่อ","5"],["โดนัท","5"],["ปุ้ม","5"],["ตังเมย์","5"],["จีน","5"],["แนท ญ","5"],["เนม","5"],["เฟเฟ","5"],["ชะเอม","5"],["มิ้ง","5"],["พิมพ์","5"],["ข้าวตัง","5"]];
+const ROSTER=[["เซกิ","1"],["ติณณ์","1"],["มะปราง","1"],["ปัณปัณ","1"],["มิกกี้","1"],["แคน","1"],["จี","1"],["มัดไหม","1"],["พลอยสวย","1"],["ปอม","1"],["อิงฟ้า","1"],["แชมป์","1"],["ไนซ์","1"],["ไอติม","2"],["โอม","2"],["น้ำขิง","2"],["ทับทิม","2"],["พราว","2"],["มิ้น","2"],["สตาร์ท","2"],["บีมบีม","2"],["แพรวา","2"],["รุ้ง","2"],["เอม","2"],["บิวเกต","2"],["เฌอดา","2"],["น้ำชา","2"],["ต้นข้าว","2"],["น้ำบี้","2"],["โดม","2"],["นาโน","2"],["ปังปอน","2"],["บลิส","3"],["แป้ง","3"],["ปิ่นปัก","3"],["ไข่มุก","3"],["ต้นหลิว","3"],["พิม","3"],["โด้","3"],["มิ้นชี่","3"],["ตุลย์","3"],["โมโต","3"],["แม็กซ์","3"],["นาน่า","3"],["เม็ดนุ่น","3"],["รถจิ๊บ","3"],["เจ้าขา","3"],["ส้ม","3"],["เชียงใหม่","3"],["แพลงก์ต้อล","3"],["ซัน","3"],["ภีร","3"],["มินนี่","3"],["ปิ๋ม","3"],["ฮัน","5"],["โซด้า","5"],["แพนด้า","5"],["เตย","5"],["แบมบี้","5"],["แนท ช","5"],["บิวตี้","5"],["ต้นกล้า","5"],["นลิน","5"],["ข้าวฟ่าง","5"],["อ๋อมแอ๋ม","5"],["จิมมี่","5"],["จูนจี้","5"],["หิน","5"],["ไบร์ท","5"],["โบว์","5"],["อองฟอง","5"],["เปรม","5"],["จีน่า","5"],["จาจ้า","5"],["อาย","5"],["แซนด์","5"],["ช่อ","5"],["โดนัท","5"],["ปุ้ม","5"],["ตังเมย์","5"],["จีน","5"],["แนท ญ","5"],["เนม","5"],["เฟเฟ","5"],["ชะเอม","5"],["มิ้ง","5"],["พิมพ์","5"],["ข้าวตัง","5"]];
 const ALIAS={"3":{"มิ้นท์":"มิ้นชี่","พิมมี่":"พิม","ภีม":"ภีร","ใหม่":"เชียงใหม่","สั้ม":"ส้ม"},"5":{"แบม":"แบมบี้","บิ้วตี้":"บิวตี้","จีน่า นลิน":"นลิน","จีน่า อาริญา":"จีน่า","จาจา":"จาจ้า","จา":"จาจ้า","แซน":"แซนด์","เฟ":"เฟเฟ","พิม":"พิมพ์"}};
 const LOC=[
  [{car:"รถขนหมู คันที่ 1 (จอดโม 2)",drv:["จูนจี้ #5"],moo:"1",share:"แชร์สัตว์ใหญ่กับหมู่ 5",place:"ศาลาประชาคม หมู่ 1",n:["80","20","39","6"]},
@@ -345,7 +367,7 @@ function buildRoster(){
   return [...map.values()];
 }
 let day=0, filt="all", q="";
-try{const s=JSON.parse(localStorage.getItem("spo-view")||"{}");if(s.day<=DATA.length)day=s.day;if(s.filt)filt=s.filt}catch(e){}
+try{const s=JSON.parse(localStorage.getItem("spo-view")||"{}");if(s.day<=DATA.length+1)day=s.day;if(s.filt)filt=s.filt}catch(e){}
 const save=()=>{try{localStorage.setItem("spo-view",JSON.stringify({day,filt}))}catch(e){}};
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function parse(t){const m=t.match(/^(.*?)\s*#\s*(\d)\s*$/);return m?{name:m[1].trim(),yr:m[2]}:{name:t,yr:null}}
@@ -374,12 +396,47 @@ function renderRoster(){
     return `<tr class="${dim?"dim":""} ${hit?"hit":""} ${nd?"":"none"}"><td>${person(r.shown?r.shown+" #"+r.yr:r.name+" #"+r.yr).replace(esc(disp),tag)}</td>${r.days.map(d=>`<td>${d.length?d.map(s=>`<span class="slot">${s.role}${s.where?` <small>· ${s.where}</small>`:""}</span>`).join(""):'<span class="empty">–</span>'}</td>`).join("")}<td class="n"><strong>${nd}</strong></td>${ROLES.map(R=>{const c=all.filter(s=>s.role===R).length;return `<td class="n">${c||'<span class="empty">·</span>'}</td>`}).join("")}</tr>`}).join("");
   document.getElementById("rwrap").innerHTML=`<table class="roster"><thead>${head}</thead><tbody>${body}</tbody></table>`;
 }
+function headsOf(d){
+  const hr=d.roles.find(r=>r.role==="หัวหน้าโม"); const L=LOC[DATA.indexOf(d)]||[];
+  return d.mobiles.map((m,mi)=>({m,mi,small:hr?hr.cells[mi*2]:[],large:hr?hr.cells[mi*2+1]:[],place:(L[mi]||{}).place||"",car:L[mi]?carName(L[mi].car):""}));
+}
+function headsText(d){
+  const plain=t=>{const p=parse(t);return p.name+(p.yr?" #"+p.yr:"")};
+  return `📣 ประกาศหัวหน้าโม\n${d.day}\n`+headsOf(d).map(x=>`\n${x.m}${x.place?" · "+x.place:""}\n🐶 สัตว์เล็ก: ${x.small.map(plain).join(", ")||"–"}\n🐄 สัตว์ใหญ่: ${x.large.map(plain).join(", ")||"–"}`).join("\n");
+}
+function renderHeads(){
+  const block=(d,di)=>{const H=headsOf(d);return `<div class="hday"><div class="hdt"><span class="dpill">${DTAB[di]||""}</span>${d.day}</div>
+    <div class="hgrid">${H.map(x=>`<div class="hitem"><div class="hm"><span class="ico">${x.mi+1}</span><div><b>${x.m}</b>${x.place?`<small>📍 ${esc(x.place)}</small>`:""}</div></div>
+      <div class="hrow"><span class="lab s">🐶 สัตว์เล็ก</span>${x.small.map(person).join("")||'<span class="empty">–</span>'}</div>
+      <div class="hrow"><span class="lab l">🐄 สัตว์ใหญ่</span>${x.large.map(person).join("")||'<span class="empty">–</span>'}</div></div>`).join("")}</div></div>`};
+  document.getElementById("heads").innerHTML=`<div class="hh"><div><div class="ht">📣 ประกาศรายชื่อหัวหน้าโม</div><div class="hd2">ทั้ง 3 วัน · ${DTAB.join(" / ")}</div></div>
+    <div class="hbtns"><button type="button" class="copy" id="copyHeads"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5"/></svg><span>คัดลอกประกาศทั้ง 3 วัน</span></button>
+      <button type="button" class="copy" id="saveHeads" ${downloads?"":"hidden"}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8.5"/></svg><span>บันทึกภาพ</span></button></div></div>
+    ${DATA.map(block).join("")}
+    <textarea id="headsTxt" readonly hidden></textarea>`;
+  document.getElementById("copyHeads").onclick=async()=>{
+    const t="📣 ประกาศรายชื่อหัวหน้าโม สพอ. 2569\n"+DATA.map(d=>"\n━━━━━━━━━━\n"+headsText(d).replace(/^📣 ประกาศหัวหน้าโม\n/,"")).join("\n");
+    try{await navigator.clipboard.writeText(t);toast("คัดลอกประกาศแล้ว")}
+    catch(e){const ta=document.getElementById("headsTxt");ta.value=t;ta.hidden=false;ta.select();toast("เลือกข้อความไว้แล้ว กดคัดลอกได้เลย")}
+  };
+  const sb=document.getElementById("saveHeads");
+  if(sb)sb.onclick=async()=>{if(!downloads)return;sb.disabled=true;
+    try{const c=await drawHeadsUI();const data=await new Promise(r=>c.toBlob(r,"image/png"));
+      const r=await downloads.save({filename:"ประกาศหัวหน้าโม สพอ. 2569.png",data});toast(r.status==="saved"?"บันทึกภาพแล้ว":"ส่งไฟล์แล้ว")}
+    catch(err){const code=err&&err.code;toast(code==="declined"?"ยกเลิกการบันทึก":code==="rate_limited"?"มีหน้าต่างบันทึกเปิดอยู่ ลองอีกครั้งสักครู่":"บันทึกภาพไม่สำเร็จ ลองอีกครั้ง")}
+    finally{sb.disabled=false}};
+}
 function render(){
-  document.getElementById("tabs").innerHTML=DATA.map((d,i)=>`<button role="tab" aria-selected="${i===day}" data-i="${i}"><span class="tl">${DTAB[i]||d.day}</span><span class="ts">${DSHORT[i].replace(" 69","")}</span><small>${d.mobiles.length} โมบาย</small></button>`).join("")+`<button role="tab" class="sum" aria-selected="${day===DATA.length}" data-i="${DATA.length}"><span class="tl">สรุปรายคน</span><span class="ts">สรุป</span><small>ทุกคน</small></button>`;
-  const isSum=day===DATA.length;
-  ["grid","coord"].forEach(id=>document.getElementById(id).hidden=isSum);
+  document.getElementById("tabs").innerHTML=DATA.map((d,i)=>`<button role="tab" aria-selected="${i===day}" data-i="${i}"><span class="tl">${DTAB[i]||d.day}</span><span class="ts">${DSHORT[i].replace(" 69","")}</span><small>${d.mobiles.length} โมบาย</small></button>`).join("")+`<button role="tab" class="sum" aria-selected="${day===DATA.length}" data-i="${DATA.length}"><span class="tl">สรุปรายคน</span><span class="ts">สรุป</span><small>ทุกคน</small></button>`+`<button role="tab" class="sum" aria-selected="${day===DATA.length+1}" data-i="${DATA.length+1}"><span class="tl">หัวหน้าโม</span><span class="ts">หัวหน้า</span><small>3 วัน</small></button>`;
+  const isSum=day===DATA.length, isHeads=day===DATA.length+1;
+  ["grid","coord"].forEach(id=>document.getElementById(id).hidden=isSum||isHeads);
+  document.getElementById("heads").hidden=!isHeads;
   document.getElementById("rwrap").hidden=!isSum;
   if(isSum){renderRoster();return}
+  if(isHeads){document.querySelectorAll("#filters button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filt));
+    const n=DATA.reduce((a,d)=>a+headsOf(d).reduce((s,x)=>s+x.small.length+x.large.length,0),0);
+    document.getElementById("summary").innerHTML=`<span>หัวหน้าโมทั้ง 3 วัน: <strong>${n}</strong> ตำแหน่ง</span>`+DATA.map((d,i)=>`<span>${DTAB[i]} <strong>${d.mobiles.length}</strong> โม</span>`).join("");
+    document.getElementById("finder").hidden=true;renderHeads();return}
   document.querySelectorAll("#filters button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filt));
   const d=DATA[day], roles=d.roles.filter(r=>r.role!==COORD);
   const cnt={1:0,2:0,3:0,5:0};
@@ -575,6 +632,54 @@ async function drawDayUI(di,opt={}){
   return c;
 }
 
+async function drawHeadsUI(){
+  try{await document.fonts.load('500 20px "Mitr"');await document.fonts.load('500 16px "IBM Plex Sans Thai"');await document.fonts.ready}catch(e){}
+  const dark=matchMedia("(prefers-color-scheme: dark)").matches&&document.documentElement.dataset.theme!=="light"||document.documentElement.dataset.theme==="dark";
+  const T={ink:tok("--ink"),muted:tok("--muted"),bg:tok("--bg"),sky:tok("--sky"),grass:tok("--grass"),f1:tok("--f1"),f2:tok("--f2"),f4:tok("--f4"),f3:tok("--f3"),border:tok("--glass-border")};
+  const Y={1:tok("--y1"),2:tok("--y2"),3:tok("--y3"),5:tok("--y5")};
+  const hx=c=>c.startsWith("#")?c:"#2479CF";
+  const card=dark?"rgba(20,36,60,.78)":"rgba(255,255,255,.72)", field=dark?"rgba(6,14,28,.45)":"rgba(255,255,255,.85)";
+  const FD='"Mitr","IBM Plex Sans Thai",sans-serif', FB='"IBM Plex Sans Thai",sans-serif';
+  const COLS=5, CW=260, G=14, M=40, PH=28, PG=6;
+  const days=DATA.map(d=>headsOf(d));
+  const cardH=x=>{const ks=Math.max(1,x.small.length),kl=Math.max(1,x.large.length);return 74+ks*(PH+PG)+kl*(PH+PG)+14};
+  const W=M*2+COLS*CW+(COLS-1)*G, headH=104;
+  let H=M+headH+G; days.forEach(H2=>{H+=40+Math.max(...H2.map(cardH))+G});H+=M-G;
+  const S=pickScale(W,H),c=document.createElement("canvas");c.width=Math.round(W*S);c.height=Math.round(H*S);const g=c.getContext("2d");g.scale(S,S);
+  g.fillStyle=T.bg;g.fillRect(0,0,W,H);
+  const blob=(x,y,r,col,a)=>{const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,rgba(hx(col),a));gr.addColorStop(1,rgba(hx(col),0));g.fillStyle=gr;g.fillRect(0,0,W,H)};
+  blob(0,0,W*.7,T.f2,dark?.6:.75);blob(W,H*.3,W*.6,T.f1,dark?.35:.4);blob(W*.2,H,W*.6,T.f4,dark?.3:.35);blob(W*.85,H*.85,W*.35,T.f3,dark?.18:.25);
+  const glass=(x,y,w,h,r)=>{g.save();g.shadowColor=dark?"rgba(0,0,0,.35)":"rgba(30,90,170,.12)";g.shadowBlur=24;g.shadowOffsetY=8;rr(g,x,y,w,h,r);g.fillStyle=card;g.fill();g.restore();rr(g,x+.5,y+.5,w-1,h-1,r);g.strokeStyle=T.border;g.lineWidth=1;g.stroke()};
+  const fit=(t,w)=>{let s=t;while(g.measureText(s).width>w&&s.length>1)s=s.slice(0,-1);return s===t?t:s+"…"};
+  const pill=(x,y,t,maxw)=>{const p=parse(t);g.font=`500 15px ${FB}`;const bw=p.yr?30:0;const name=fit(p.name,maxw-bw-20);const tw=g.measureText(name).width,w=tw+bw+20;
+    rr(g,x,y,w,PH,12);g.fillStyle=field;g.fill();g.strokeStyle=T.border;g.stroke();g.fillStyle=p.yr?Y[p.yr]:T.ink;g.textBaseline="middle";g.fillText(name,x+10,y+PH/2+1);
+    if(p.yr){const bx=x+10+tw+5;rr(g,bx,y+6,26,PH-12,8);g.fillStyle=rgba(hx(Y[p.yr]),.16);g.fill();g.fillStyle=Y[p.yr];g.font=`600 11px ${FD}`;g.textAlign="center";g.fillText("#"+p.yr,bx+13,y+PH/2+1);g.textAlign="left"}
+    g.textBaseline="alphabetic"};
+  let y=M; glass(M,y,W-M*2,headH,26);
+  g.font=`30px ${FB}`;g.fillText("📣",M+22,y+60);
+  g.fillStyle=T.ink;g.font=`600 28px ${FD}`;g.fillText("ประกาศรายชื่อหัวหน้าโม",M+70,y+50);
+  g.fillStyle=T.muted;g.font=`15px ${FB}`;g.fillText("สพอ. 2569 · "+DTAB.join(" / "),M+70,y+80);
+  y+=headH+G;
+  DATA.forEach((d,di)=>{
+    g.font=`600 12px ${FB}`;const lt=DTAB[di]||"",lw=g.measureText(lt).width+22;rr(g,M,y+6,lw,24,12);g.fillStyle=rgba(hx(T.sky),.12);g.fill();g.strokeStyle=rgba(hx(T.sky),.3);g.stroke();
+    g.fillStyle=T.sky;g.fillText(lt,M+11,y+22);g.fillStyle=T.ink;g.font=`500 18px ${FD}`;g.fillText(d.day,M+lw+10,y+24);
+    y+=40;const rh=Math.max(...days[di].map(cardH));
+    days[di].forEach((x,j)=>{const cx=M+j*(CW+G);glass(cx,y,CW,rh,22);
+      rr(g,cx+14,y+14,30,30,15);g.fillStyle=rgba(hx(T.sky),.14);g.fill();g.strokeStyle=rgba(hx(T.sky),.3);g.stroke();
+      g.fillStyle=T.sky;g.font=`500 14px ${FD}`;g.textAlign="center";g.fillText(String(x.mi+1),cx+29,y+34);g.textAlign="left";
+      g.fillStyle=T.ink;g.font=`500 16px ${FD}`;g.fillText(x.m,cx+52,y+30);
+      g.fillStyle=T.muted;g.font=`12.5px ${FB}`;g.fillText(fit("📍 "+x.place,CW-72),cx+52,y+50);
+      let py=y+70;
+      [[x.small,"🐶 สัตว์เล็ก",T.sky],[x.large,"🐄 สัตว์ใหญ่",T.grass]].forEach(([L,lab,col])=>{
+        g.fillStyle=col;g.font=`600 12.5px ${FB}`;g.fillText(lab,cx+14,py+19);
+        if(!L.length){g.fillStyle=T.muted;g.fillText("–",cx+100,py+19);py+=PH+PG}
+        L.forEach(t=>{pill(cx+96,py,t,CW-110);py+=PH+PG});
+      });
+    });
+    y+=rh+G;
+  });
+  return c;
+}
 async function dayPages(di){
   // one A4-width page per group of cards, each rendered at full sharpness
   const n=DATA[di].mobiles.length, pages=[];
@@ -613,8 +718,8 @@ function makePdf(canvases){
 }
 let downloads=null;
 function toast(t){const el=document.getElementById("toast");el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2600)}
-function syncDl(){const box=document.getElementById("dl");box.hidden=!downloads;if(!downloads)return;
-  const isSum=day===DATA.length; box.querySelectorAll("[data-dl=png],[data-dl=pdf]").forEach(b=>b.hidden=isSum)}
+function syncDl(){const sh=document.getElementById("saveHeads");if(sh)sh.hidden=!downloads;const box=document.getElementById("dl");box.hidden=!downloads;if(!downloads)return;
+  const isSum=day>=DATA.length; box.querySelectorAll("[data-dl=png],[data-dl=pdf]").forEach(b=>b.hidden=isSum)}
 const _render=render; render=function(){_render();syncDl()};
 document.getElementById("dl").addEventListener("click",async e=>{
   const b=e.target.closest("button[data-dl]"); if(!b||!downloads)return;
