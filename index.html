@@ -139,6 +139,7 @@ h1{font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;font-weight:600;text
 .heads .hm small{display:block;font-size:12px;color:var(--muted);line-height:1.3}
 .heads .hrow{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
 .heads .lab{font-size:12px;font-weight:600;min-width:74px}
+.heads .tch{display:inline-flex;align-items:center;gap:4px;font:500 13px var(--f-body);color:var(--muted);padding:3px 10px;border-radius:999px;border:1px dashed var(--glass-border);background:color-mix(in srgb,var(--field) 60%,transparent)}
 .heads .lab.s{color:var(--sky)} .heads .lab.l{color:var(--grass)}
 .heads textarea{width:100%;min-height:140px;font:13px var(--f-body);border-radius:12px;padding:8px;border:1px solid var(--line);background:var(--field);color:var(--ink)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--glass-strong);color:var(--ink);border:1px solid var(--glass-border);border-radius:999px;padding:9px 18px;font-size:14px;box-shadow:var(--shadow);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
@@ -398,17 +399,18 @@ function renderRoster(){
 }
 function headsOf(d){
   const hr=d.roles.find(r=>r.role==="หัวหน้าโม"); const L=LOC[DATA.indexOf(d)]||[];
-  return d.mobiles.map((m,mi)=>({m,mi,small:hr?hr.cells[mi*2]:[],large:hr?hr.cells[mi*2+1]:[],place:(L[mi]||{}).place||"",car:L[mi]?carName(L[mi].car):""}));
+  const ar=d.roles.find(r=>/อาจารย์/.test(r.role));
+  return d.mobiles.map((m,mi)=>({m,mi,small:hr?hr.cells[mi*2]:[],large:hr?hr.cells[mi*2+1]:[],ts:ar?ar.cells[mi*2]:[],tl:ar?ar.cells[mi*2+1]:[],place:(L[mi]||{}).place||"",car:L[mi]?carName(L[mi].car):""}));
 }
 function headsText(d){
   const plain=t=>{const p=parse(t);return p.name+(p.yr?" #"+p.yr:"")};
-  return `📣 ประกาศหัวหน้าโม\n${d.day}\n`+headsOf(d).map(x=>`\n${x.m}${x.place?" · "+x.place:""}\n🐶 สัตว์เล็ก: ${x.small.map(plain).join(", ")||"–"}\n🐄 สัตว์ใหญ่: ${x.large.map(plain).join(", ")||"–"}`).join("\n");
+  return `📣 ประกาศหัวหน้าโม\n${d.day}\n`+headsOf(d).map(x=>`\n${x.m}${x.place?" · "+x.place:""}\n🐶 สัตว์เล็ก: ${x.small.map(plain).join(", ")||"–"}${x.ts.length?" (อาจารย์: "+x.ts.join(", ")+")":""}\n🐄 สัตว์ใหญ่: ${x.large.map(plain).join(", ")||"–"}${x.tl.length?" (อาจารย์: "+x.tl.join(", ")+")":""}`).join("\n");
 }
 function renderHeads(){
   const block=(d,di)=>{const H=headsOf(d);return `<div class="hday"><div class="hdt"><span class="dpill">${DTAB[di]||""}</span>${d.day}</div>
     <div class="hgrid">${H.map(x=>`<div class="hitem"><div class="hm"><span class="ico">${x.mi+1}</span><div><b>${x.m}</b>${x.place?`<small>📍 ${esc(x.place)}</small>`:""}</div></div>
-      <div class="hrow"><span class="lab s">🐶 สัตว์เล็ก</span>${x.small.map(person).join("")||'<span class="empty">–</span>'}</div>
-      <div class="hrow"><span class="lab l">🐄 สัตว์ใหญ่</span>${x.large.map(person).join("")||'<span class="empty">–</span>'}</div></div>`).join("")}</div></div>`};
+      <div class="hrow"><span class="lab s">🐶 สัตว์เล็ก</span>${x.small.map(person).join("")||'<span class="empty">–</span>'}${x.ts.map(t=>`<span class="tch">👨‍🏫 ${esc(t)}</span>`).join("")}</div>
+      <div class="hrow"><span class="lab l">🐄 สัตว์ใหญ่</span>${x.large.map(person).join("")||'<span class="empty">–</span>'}${x.tl.map(t=>`<span class="tch">👨‍🏫 ${esc(t)}</span>`).join("")}</div></div>`).join("")}</div></div>`};
   document.getElementById("heads").innerHTML=`<div class="hh"><div><div class="ht">📣 ประกาศรายชื่อหัวหน้าโม</div><div class="hd2">ทั้ง 3 วัน · ${DTAB.join(" / ")}</div></div>
     <div class="hbtns"><button type="button" class="copy" id="copyHeads"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7.5a2 2 0 0 0 2 2h2.5"/></svg><span>คัดลอกประกาศทั้ง 3 วัน</span></button>
       <button type="button" class="copy" id="saveHeads" ${downloads?"":"hidden"}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8.5"/></svg><span>บันทึกภาพ</span></button></div></div>
@@ -642,7 +644,7 @@ async function drawHeadsUI(){
   const FD='"Mitr","IBM Plex Sans Thai",sans-serif', FB='"IBM Plex Sans Thai",sans-serif';
   const COLS=5, CW=260, G=14, M=40, PH=28, PG=6;
   const days=DATA.map(d=>headsOf(d));
-  const cardH=x=>{const ks=Math.max(1,x.small.length),kl=Math.max(1,x.large.length);return 74+ks*(PH+PG)+kl*(PH+PG)+14};
+  const cardH=x=>{const ks=Math.max(1,x.small.length),kl=Math.max(1,x.large.length);return 74+ks*(PH+PG)+kl*(PH+PG)+(x.ts.length+x.tl.length)*TH+14};const TH=24;
   const W=M*2+COLS*CW+(COLS-1)*G, headH=104;
   let H=M+headH+G; days.forEach(H2=>{H+=40+Math.max(...H2.map(cardH))+G});H+=M-G;
   const S=pickScale(W,H),c=document.createElement("canvas");c.width=Math.round(W*S);c.height=Math.round(H*S);const g=c.getContext("2d");g.scale(S,S);
@@ -670,10 +672,11 @@ async function drawHeadsUI(){
       g.fillStyle=T.ink;g.font=`500 16px ${FD}`;g.fillText(x.m,cx+52,y+30);
       g.fillStyle=T.muted;g.font=`12.5px ${FB}`;g.fillText(fit("📍 "+x.place,CW-72),cx+52,y+50);
       let py=y+70;
-      [[x.small,"🐶 สัตว์เล็ก",T.sky],[x.large,"🐄 สัตว์ใหญ่",T.grass]].forEach(([L,lab,col])=>{
+      [[x.small,"🐶 สัตว์เล็ก",T.sky,x.ts],[x.large,"🐄 สัตว์ใหญ่",T.grass,x.tl]].forEach(([L,lab,col,TT])=>{
         g.fillStyle=col;g.font=`600 12.5px ${FB}`;g.fillText(lab,cx+14,py+19);
         if(!L.length){g.fillStyle=T.muted;g.fillText("–",cx+100,py+19);py+=PH+PG}
         L.forEach(t=>{pill(cx+96,py,t,CW-110);py+=PH+PG});
+        TT.forEach(t=>{g.fillStyle=T.muted;g.font=`500 13.5px ${FB}`;g.fillText(fit("👨‍🏫 "+t,CW-110),cx+100,py+14);py+=TH});
       });
     });
     y+=rh+G;
