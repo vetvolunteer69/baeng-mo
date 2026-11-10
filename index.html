@@ -70,13 +70,13 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1
   .bg .drift{animation:drift 26s ease-in-out infinite alternate;transform-origin:50% 50%}
   @keyframes drift{to{transform:translate(-3%,2%) rotate(4deg) scale(1.05)}}
 }
-.glass,.unit,.finder,.coord,.rwrap,.tabs button,.filters,.search input,header.top,.summary{
+.glass,.unit,.finder,.coord,.rwrap,.tabs button,.filters,.search input,header.top,.summary,.st-head,.kpi,.st-card,.st-tbl{
   position:relative;background:linear-gradient(135deg,var(--glass-hi) -40%,var(--glass) 40%);
   -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
   border:1px solid var(--glass-border);
   box-shadow:var(--shadow),inset 1px 1px 0 rgba(255,255,255,.45),inset -1px -1px 0 rgba(255,255,255,.06)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .glass,.unit,.finder,.coord,.rwrap,.tabs button,.filters,.search input,header.top,.summary{background:var(--glass-strong)}}
+  .glass,.unit,.finder,.coord,.rwrap,.tabs button,.filters,.search input,header.top,.summary,.st-head,.kpi,.st-card,.st-tbl{background:var(--glass-strong)}}
 .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding-block:18px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
 h1,h2,.tabs button,.summary strong,.lbl{font-family:var(--f-display)}
 header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:28px}
@@ -91,9 +91,10 @@ h1{font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;font-weight:600;text
 .theme button svg .fill{fill:currentColor;stroke:none}
 .theme button[aria-pressed="true"]{background:var(--glass-strong);color:var(--ink);box-shadow:0 1px 6px rgba(0,0,0,.12)}
 .legend{display:flex;gap:8px;flex-wrap:wrap}
+.controls[hidden],.legend[hidden]{display:none!important}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:13.5px;font-weight:500;background:var(--field);border:1px solid var(--glass-border)}
 .dot{width:10px;height:10px;border-radius:50%}
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
 .tabs button{appearance:none;color:var(--ink);border-radius:22px;padding:12px 10px;font-size:18px;font-weight:500;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0;line-height:1.25}
 .tabs button .ts{display:none}
 .tabs button small{font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:400}
@@ -202,7 +203,7 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
 .roster .note::before{display:none}
 [hidden]{display:none!important}
 @media (max-width:560px){
-  .glass,.unit,.finder,.coord,.rwrap,.tabs button,.filters,.search input,header.top,.summary{-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%)}
+  .glass,.unit,.finder,.coord,.rwrap,.tabs button,.filters,.search input,header.top,.summary,.st-head,.kpi,.st-card,.st-tbl{-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%)}
   header.top{padding:10px 10px 10px 12px;gap:8px;border-radius:24px;flex-wrap:nowrap}
   .brand{gap:10px}
   .brand>div:last-child{min-width:0}
@@ -253,6 +254,72 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
   .coord{padding:12px 14px;gap:8px 16px}
   .roster td:first-child,.roster th:first-child{position:sticky;left:0;z-index:1;background:var(--glass-strong)}
   .roster th:first-child{z-index:2}
+}
+
+/* stats module */
+.stats{display:flex;flex-direction:column;gap:14px}
+.stats[hidden]{display:none}
+.st-head{border-radius:26px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.st-head .ht{font:500 19px var(--f-display)}
+.st-head .hd2{font-size:12.5px;color:var(--muted)}
+.st-days{display:flex;gap:6px;flex-wrap:wrap}
+.st-days button{appearance:none;font:500 13.5px var(--f-body);color:var(--ink);padding:7px 13px;border-radius:999px;cursor:pointer;background:var(--glass-strong);border:1px solid var(--glass-border)}
+.st-days button[aria-pressed="true"]{color:var(--sky);background:color-mix(in srgb,var(--sky) 14%,var(--glass-strong));border-color:color-mix(in srgb,var(--sky) 35%,transparent)}
+.st-days button:disabled{opacity:.45;cursor:default}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{border-radius:22px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi .k{font-size:12.5px;color:var(--muted);font-weight:600}
+.kpi .v{font:500 30px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:12.5px;color:var(--muted)}
+.kpi.s .v{color:var(--sky)} .kpi.l .v{color:var(--grass)}
+.st-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.st-card{border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.st-card h3{margin:0;font:500 16px var(--f-display);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.st-card h3 small{font:400 12.5px var(--f-body);color:var(--muted)}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:4px 10px;align-items:center}
+.bar .lab{font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .lab small{color:var(--muted)}
+.bar .num{font:500 15px var(--f-display);text-align:right;font-variant-numeric:tabular-nums}
+.bar .tr{grid-column:1/-1;height:8px;border-radius:99px;background:color-mix(in srgb,var(--ink) 7%,transparent);overflow:hidden}
+.bar .tr i{display:block;height:100%;border-radius:99px;background:var(--c)}
+.mix{display:flex;height:12px;border-radius:99px;overflow:hidden;background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.mix i{display:block;height:100%}
+.mixlg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted)}
+.mixlg b{font:500 14px var(--f-display);color:var(--ink);margin-left:3px}
+.mixlg .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.st-tbl{border-radius:24px;overflow-x:auto}
+.st-tbl table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.st-tbl th,.st-tbl td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.st-tbl th:first-child,.st-tbl td:first-child{text-align:left}
+.st-tbl thead th{font:500 13px var(--f-display);color:var(--muted);background:var(--glass-strong);position:sticky;top:0}
+.st-tbl .dayrow td{font:500 14px var(--f-display);background:color-mix(in srgb,var(--sky) 8%,transparent);color:var(--sky)}
+.st-tbl .tot td{font-weight:600;background:color-mix(in srgb,var(--grass) 8%,transparent)}
+.st-tbl td.s{color:var(--sky)} .st-tbl td.l{color:var(--grass)}
+.st-use h3{margin:0 0 2px;font:500 16px var(--f-display);padding:14px 16px 6px}
+.st-use .hint{font-size:12.5px;color:var(--muted);padding:0 16px 10px}
+.st-use th small{display:block;font:400 11px var(--f-body);color:var(--muted)}
+.st-use td.z{color:var(--muted);opacity:.5}
+.st-use .dayrow td:first-child{white-space:nowrap;background:color-mix(in srgb,var(--sky) 8%,var(--glass-strong))}
+.st-use .sw{display:none}
+@media (max-width:640px){.st-use .sw{display:inline}}
+.st-use td:first-child,.st-use th:first-child{position:sticky;left:0;z-index:1;background:var(--glass-strong)}
+.st-use thead th:first-child{z-index:2}
+.st-note{font-size:12.5px;color:var(--muted);padding:0 6px}
+@media (max-width:640px){
+  .kpis{grid-template-columns:1fr 1fr;gap:8px}
+  .kpi{padding:12px 14px;border-radius:20px}
+  .kpi .v{font-size:26px}
+  .st-two{grid-template-columns:1fr}
+  .st-head{padding:12px 14px}
+  .st-days{width:100%}
+  .st-days{flex-wrap:nowrap}
+  .st-days button{flex:1;padding:8px 4px;white-space:nowrap;font-size:13px}
+  .st-days .tl{display:none} .st-days .ts{display:inline!important}
+  .st-tbl th,.st-tbl td{padding:8px 7px;font-size:13px}
+  .st-tbl td:first-child{white-space:normal;min-width:96px}
+  .st-tbl thead th{font-size:12px}
+  .tabs button{flex:1 0 auto;padding:7px 9px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -318,6 +385,7 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
     </div>
   </div>
   <section class="heads" id="heads"></section>
+  <section class="stats" id="stats" hidden></section>
   <div class="toast" id="toast" role="status" hidden></div>
   <div class="grid" id="grid"></div>
   <div class="coord" id="coord"></div>
@@ -325,7 +393,7 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
 </div>
 
 <script>
-const DATA=[{"day":"วันที่ 1","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จูนจี้ #5"],["จีน่า อาริญา #5"],["ชะเอม #5"],["แบม #5"],["ข้าวฟ่าง #5"],["เตย #5"],["จีน #5"],["ไบร์ท #5"],["แพนด้า #5"],["หิน #5"]]},{"role":"โต๊ะตรวจ","cells":[["โซด้า #5","โบว์ #5"],[],["ช่อ #5","อองฟอง #5"],[],["เปรม #5","เฟ #5"],[],["มิ้ง #5","อาย #5"],[],["แซน #5","โดนัท #5"],[]]},{"role":"บังคับสัตว์","cells":[["มิ้น #2","แคน #1"],["ฮัน #5","ตุลย์ #3","นาโน #2"],["ซัน #3","มินนี่ #3"],["จิมมี่ #5","โมโต #3","มะปราง #1"],["พลอยสวย #1","สั้ม #3"],["ต้นกล้า #5","โด้ #3","เอม #2"],["รถจิ๊บ #3","ใหม่ #3"],["แนท ช #5","ต้นหลิว #3","ทับทิม #2"],["ภีม #3","น้ำชา #2"],["ข้าวตัง #5","เจ้าขา #3","ปังปอน #2"]]},{"role":"เวชภัณฑ์","cells":[["บิ้วตี้ #5","เม็ดนุ่น #3"],["จีน่า นลิน #5","มิกกี้ #1"],["แนท ญ #5","แพรวา #2"],["แพลงก์ต้อล #3"],["เนม #5","บิวเกต #2"],["พิมมี่ #3","พราว #2"],["ปุ้ม #5","โดม #2"],["อิงฟ้า #1","ปิ่นปัก #3"],["อ๋อมแอ๋ม #5","ปัณปัณ #1"],["จา #5","จี #1"]]},{"role":"ทะเบียน","cells":[["ปอม #1"],["น้ำบี้ #2"],["ติณณ์ #1"],["สตาร์ท #2"],["ไอติม #2"],["มัดไหม #1"],["แชมป์ #1"],["ไนซ์ #1"],["บีมบีม #2"],["เซกิ #1"]]},{"role":"GB","cells":[["น้ำขิง #2"],[],["เฌอดา #2"],[],["ต้นข้าว #2"],[],["รุ้ง #2"],[],["โอม #2"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอน้ำใจ"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ไมกี้"],["หมอดาด้า"],["อ.มาย"],["อ.มาริ"],["หมออุ้ม"],["หมอกาฟิว"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["นาน่า #3"],["095-8571579"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 2","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จีน่า นลิน #5"],["อาย #5"],["พิม #5"],["ปุ้ม #5"],["แม็กซ์ #3"],["บลิส #3"],["เจ้าขา #3"],["แป้ง #3"],["โดนัท #5"],["แซน #5"]]},{"role":"โต๊ะตรวจ","cells":[["แบม #5","บิ้วตี้ #5"],[],["จีน่า อาริญา #5","เตย #5"],[],["พิมมี่ #3","มินนี่ #3"],[],["ไข่มุก #3","มิ้นท์ #3"],[],["แนท ญ #5","ตังเมย์ #5"],[]]},{"role":"บังคับสัตว์","cells":[["จี #1","น้ำบี้ #2"],["แนท ช #5","ภีม #3"],["นาน่า #3","ปัณปัณ #1"],["เนม #5","เฌอดา #2","เม็ดนุ่น #3"],["ฮัน #5","แพนด้า #5"],["จาจา #5","มัดไหม #1","พราว #2"],["ไบร์ท #5","อองฟอง #5"],["โอม #2","ชะเอม #5","ใหม่ #3"],["ตุลย์ #3","อิงฟ้า #1"],["หิน #5","มิ้น #2","ติณณ์ #1"]]},{"role":"เวชภัณฑ์","cells":[["แพลงก์ต้อล #3","น้ำชา #2"],["โซด้า #5"],["ต้นหลิว #3","แชมป์ #1"],["จีน #5","ปังปอน #2"],["ปิ่นปัก #3","ไนซ์ #1"],["เปรม #5","ซัน #3"],["สั้ม #3","มะปราง #1"],["จูนจี้ #5"],["เซกิ #1","รถจิ๊บ #3"],["โบว์ #5","นาโน #2"]]},{"role":"ทะเบียน","cells":[["ต้นข้าว #2"],["รุ้ง #2"],["บิวเกต #2"],["บีมบีม #2"],["มิกกี้ #1"],["พลอยสวย #1"],["น้ำขิง #2"],["ไอติม #2"],["เอม #2"],["แพรวา #2"]]},{"role":"GB","cells":[["โดม #2"],[],["สตาร์ท #2"],[],["ทับทิม #2"],[],["ปอม #1"],[],["แคน #1"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ม้า"],["อ.พงษ์ธร"],["หมอพี"],["หมอกาฟิว"],["หมอเบส"],["หมอเชียร์"],["หมอโหน่ง"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["โด้ #3","โมโต #3"],["098-6518392","095-1748658"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 3","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4"],"roles":[{"role":"หัวหน้าโม","cells":[["นาน่า #3"],["สั้ม #3"],["มินนี่ #3"],["โด้ #3"],["โมโต #3"],["ตุลย์ #3"],["เปรม #5"],["ใหม่ #3"],[],[]]},{"role":"โต๊ะตรวจ","cells":[["ปิ่นปัก #3","ต้นหลิว #3"],[],["เม็ดนุ่น #3","รถจิ๊บ #3"],[],["แพลงก์ต้อล #3","เจ้าขา #3"],[],["ภีม #3","ซัน #3"],[],[],[]]},{"role":"บังคับสัตว์","cells":[["แนท ช #5","จีน่า นลิน #5"],["แซน #5","แชมป์ #1","จูนจี้ #5"],["เนม #5","บิ้วตี้ #5"],["ไบร์ท #5","โดม #2","น้ำชา #2"],["อาย #5","จาจา #5"],["ฮัน #5","ต้นข้าว #2","น้ำขิง #2"],["แนท ญ #5","จีน #5"],["บิวเกต #2","แบม #5","พลอยสวย #1"],[],[]]},{"role":"เวชภัณฑ์","cells":[["รุ้ง #2","ชะเอม #5","ไอติม #2"],["แพนด้า #5","แคน #1"],["พิมมี่ #3","มิ้น #2","อิงฟ้า #1"],["โดนัท #5","ติณณ์ #1"],["โซด้า #5","บีมบีม #2","โอม #2"],["เอม #2","ปอม #1"],["อองฟอง #5","มิกกี้ #1","นาโน #2"],["ทับทิม #2","ปัณปัณ #1"],[],[]]},{"role":"ทะเบียน","cells":[["แพรวา #2","ไนซ์ #1"],["โบว์ #5"],["จี #1","สตาร์ท #2"],["หิน #5"],["น้ำบี้ #2","เซกิ #1"],["เตย #5"],["เฌอดา #2"],["จีน่า อาริญา #5"],[],[]]},{"role":"GB","cells":[["มัดไหม #1"],[],["ปังปอน #2"],[],["มะปราง #1"],[],["พราว #2"],[],[],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["อ.มาริ"],["หมอฟลุ๊ค"],["หมอโบว์ลิ่ง"],["อ.พงษ์ธร"],["หมอดวก"],["หมอกรีน"],["หมอกาฟิว"],[],[]]},{"role":"ประสานงานนอกประจำวัน","cells":[["ปุ้ม #5"],["099-2709713"],[],[],[],[],[],[],[],[]]}]}];
+const DATA=[{"day":"วันที่ 1","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จูนจี้ #5"],["จีน่า อาริญา #5"],["ชะเอม #5"],["แบม #5"],["ข้าวฟ่าง #5"],["เตย #5"],["จีน #5"],["ไบร์ท #5"],["แพนด้า #5"],["หิน #5"]]},{"role":"โต๊ะตรวจ","cells":[["โซด้า #5","โบว์ #5"],[],["ช่อ #5","อองฟอง #5"],[],["เปรม #5","เฟ #5"],[],["มิ้ง #5","อาย #5"],[],["แซน #5","โดนัท #5"],[]]},{"role":"บังคับสัตว์","cells":[["มิ้น #2","แคน #1"],["ฮัน #5","ตุลย์ #3","นาโน #2"],["ซัน #3","มินนี่ #3"],["จิมมี่ #5","โมโต #3","มะปราง #1"],["พลอยสวย #1","สั้ม #3"],["ต้นกล้า #5","โด้ #3","เอม #2"],["รถจิ๊บ #3","ใหม่ #3"],["แนท ช #5","ต้นหลิว #3","ทับทิม #2"],["ภีม #3","น้ำชา #2"],["ข้าวตัง #5","เจ้าขา #3","ปังปอน #2"]]},{"role":"เวชภัณฑ์","cells":[["บิ้วตี้ #5","เม็ดนุ่น #3"],["จีน่า นลิน #5","มิกกี้ #1"],["แนท ญ #5","แพรวา #2"],["แพลงก์ต้อล #3"],["เนม #5","บิวเกต #2"],["พิมมี่ #3","พราว #2"],["ปุ้ม #5","โดม #2"],["อิงฟ้า #1","ปิ่นปัก #3"],["อ๋อมแอ๋ม #5","ปัณปัณ #1"],["จา #5","จี #1"]]},{"role":"ทะเบียน","cells":[["ปอม #1"],["น้ำบี้ #2"],["ติณณ์ #1"],["สตาร์ท #2"],["ไอติม #2"],["มัดไหม #1"],["แชมป์ #1"],["ไนซ์ #1"],["บีมบีม #2"],["เซกิ #1"]]},{"role":"GB","cells":[["น้ำขิง #2"],[],["เฌอดา #2"],[],["ต้นข้าว #2"],[],["รุ้ง #2"],[],["โอม #2"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอน้ำใจ"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ไมกี้"],["หมอดาด้า"],["อ.มาย"],["อ.มาริ"],["หมออุ้ม"],["หมอกาฟิว"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["นาน่า #3"],["095-8571579"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 2","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4","โมบาย 5"],"roles":[{"role":"หัวหน้าโม","cells":[["จีน่า นลิน #5"],["อาย #5"],["พิม #5"],["ปุ้ม #5"],["แม็กซ์ #3"],["บลิส #3"],["เจ้าขา #3"],["แป้ง #3"],["โดนัท #5"],["แซน #5"]]},{"role":"โต๊ะตรวจ","cells":[["แบม #5","บิ้วตี้ #5"],[],["จีน่า อาริญา #5","เตย #5"],[],["พิมมี่ #3","มินนี่ #3"],[],["ไข่มุก #3","มิ้นท์ #3"],[],["แนท ญ #5","ตังเมย์ #5"],[]]},{"role":"บังคับสัตว์","cells":[["จี #1","น้ำบี้ #2"],["แนท ช #5","ภีม #3"],["นาน่า #3","ปัณปัณ #1"],["เนม #5","เฌอดา #2","เม็ดนุ่น #3"],["ฮัน #5","แพนด้า #5"],["จาจา #5","มัดไหม #1","พราว #2"],["ไบร์ท #5","อองฟอง #5"],["โอม #2","ชะเอม #5","ใหม่ #3"],["ตุลย์ #3","อิงฟ้า #1"],["หิน #5","มิ้น #2","ติณณ์ #1"]]},{"role":"เวชภัณฑ์","cells":[["แพลงก์ต้อล #3","น้ำชา #2"],["โซด้า #5"],["ต้นหลิว #3","แชมป์ #1"],["จีน #5","ปังปอน #2"],["ปิ่นปัก #3","ไนซ์ #1"],["เปรม #5","ซัน #3"],["สั้ม #3","มะปราง #1"],["จูนจี้ #5"],["เซกิ #1","รถจิ๊บ #3"],["โบว์ #5","นาโน #2"]]},{"role":"ทะเบียน","cells":[["ต้นข้าว #2"],["รุ้ง #2"],["บิวเกต #2"],["บีมบีม #2"],["มิกกี้ #1"],["พลอยสวย #1"],["น้ำขิง #2"],["ไอติม #2"],["เอม #2"],["แพรวา #2"]]},{"role":"GB","cells":[["โดม #2"],[],["สตาร์ท #2"],[],["ทับทิม #2"],[],["ปอม #1"],[],["แคน #1"],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["หมอฟลุ๊ค"],["อ.สราวุธ"],["อ.ม้า"],["อ.พงษ์ธร"],["หมอพี"],["หมอกาฟิว"],["หมอเบส"],["หมอเชียร์"],["หมอโหน่ง"]]},{"role":"ประสานงานนอกประจำวัน","cells":[["โด้ #3","โมโต #3"],["098-6518392","095-1748658"],[],[],[],[],[],[],[],[]]}]},{"day":"วันที่ 3","mobiles":["โมบาย 1","โมบาย 2","โมบาย 3","โมบาย 4"],"roles":[{"role":"หัวหน้าโม","cells":[["นาน่า #3"],["สั้ม #3"],["มินนี่ #3"],["โด้ #3"],["โมโต #3"],["ตุลย์ #3"],["เปรม #5"],["ใหม่ #3"],[],[]]},{"role":"โต๊ะตรวจ","cells":[["ปิ่นปัก #3","ต้นหลิว #3"],[],["เม็ดนุ่น #3","รถจิ๊บ #3"],[],["แพลงก์ต้อล #3","เจ้าขา #3"],[],["ภีม #3","ซัน #3"],[],[],[]]},{"role":"บังคับสัตว์","cells":[["เนม #5","จีน่า นลิน #5"],["แซน #5","แชมป์ #1","จูนจี้ #5"],["แนท ช #5","บิ้วตี้ #5"],["ไบร์ท #5","โดม #2","น้ำชา #2"],["อาย #5","จาจา #5"],["ฮัน #5","ต้นข้าว #2","น้ำขิง #2"],["แนท ญ #5","จีน #5"],["บิวเกต #2","แบม #5","พลอยสวย #1"],[],[]]},{"role":"เวชภัณฑ์","cells":[["รุ้ง #2","ชะเอม #5","ไอติม #2"],["แพนด้า #5","แคน #1"],["พิมมี่ #3","มิ้น #2","อิงฟ้า #1"],["โดนัท #5","ติณณ์ #1"],["โซด้า #5","บีมบีม #2","โอม #2"],["เอม #2","ปอม #1"],["อองฟอง #5","มิกกี้ #1","นาโน #2"],["ทับทิม #2","ปัณปัณ #1"],[],[]]},{"role":"ทะเบียน","cells":[["แพรวา #2","ไนซ์ #1"],["โบว์ #5"],["จี #1","สตาร์ท #2"],["หิน #5"],["น้ำบี้ #2","เซกิ #1"],["เตย #5"],["เฌอดา #2"],["จีน่า อาริญา #5"],[],[]]},{"role":"GB","cells":[["มัดไหม #1"],[],["ปังปอน #2"],[],["มะปราง #1"],[],["พราว #2"],[],[],[]]},{"role":"อาจารย์/หมอ","cells":[["อ.ธนาคาร"],["อ.มาริ"],["หมอฟลุ๊ค"],["หมอโบว์ลิ่ง"],["อ.พงษ์ธร"],["หมอดวก"],["หมอกรีน"],["หมอกาฟิว"],[],[]]},{"role":"ประสานงานนอกประจำวัน","cells":[["ปุ้ม #5"],["099-2709713"],[],[],[],[],[],[],[],[]]}]}];
 const COORD="ประสานงานนอกประจำวัน";
 const DATES=["วันจันทร์ที่ 9 พฤศจิกายน 2569","วันอังคารที่ 10 พฤศจิกายน 2569","วันพุธที่ 11 พฤศจิกายน 2569"];
 const DSHORT=["จ. 9 พ.ย. 69","อ. 10 พ.ย. 69","พ. 11 พ.ย. 69"];
@@ -368,7 +436,7 @@ function buildRoster(){
   return [...map.values()];
 }
 let day=0, filt="all", q="";
-try{const s=JSON.parse(localStorage.getItem("spo-view")||"{}");if(s.day<=DATA.length+1)day=s.day;if(s.filt)filt=s.filt}catch(e){}
+try{const s=JSON.parse(localStorage.getItem("spo-view")||"{}");if(s.day<=DATA.length+2)day=s.day;if(s.filt)filt=s.filt}catch(e){}
 const save=()=>{try{localStorage.setItem("spo-view",JSON.stringify({day,filt}))}catch(e){}};
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function parse(t){const m=t.match(/^(.*?)\s*#\s*(\d)\s*$/);return m?{name:m[1].trim(),yr:m[2]}:{name:t,yr:null}}
@@ -429,11 +497,14 @@ function renderHeads(){
     finally{sb.disabled=false}};
 }
 function render(){
-  document.getElementById("tabs").innerHTML=DATA.map((d,i)=>`<button role="tab" aria-selected="${i===day}" data-i="${i}"><span class="tl">${DTAB[i]||d.day}</span><span class="ts">${DSHORT[i].replace(" 69","")}</span><small>${d.mobiles.length} โมบาย</small></button>`).join("")+`<button role="tab" class="sum" aria-selected="${day===DATA.length}" data-i="${DATA.length}"><span class="tl">สรุปรายคน</span><span class="ts">สรุป</span><small>ทุกคน</small></button>`+`<button role="tab" class="sum" aria-selected="${day===DATA.length+1}" data-i="${DATA.length+1}"><span class="tl">หัวหน้าโม</span><span class="ts">หัวหน้า</span><small>3 วัน</small></button>`;
-  const isSum=day===DATA.length, isHeads=day===DATA.length+1;
-  ["grid","coord"].forEach(id=>document.getElementById(id).hidden=isSum||isHeads);
+  document.getElementById("tabs").innerHTML=DATA.map((d,i)=>`<button role="tab" aria-selected="${i===day}" data-i="${i}"><span class="tl">${DTAB[i]||d.day}</span><span class="ts">${DSHORT[i].replace(" 69","")}</span><small>${d.mobiles.length} โมบาย</small></button>`).join("")+`<button role="tab" class="sum" aria-selected="${day===DATA.length}" data-i="${DATA.length}"><span class="tl">สรุปรายคน</span><span class="ts">สรุป</span><small>ทุกคน</small></button>`+`<button role="tab" class="sum" aria-selected="${day===DATA.length+1}" data-i="${DATA.length+1}"><span class="tl">หัวหน้าโม</span><span class="ts">หัวหน้า</span><small>3 วัน</small></button>`+`<button role="tab" class="sum" aria-selected="${day===DATA.length+2}" data-i="${DATA.length+2}"><span class="tl">สรุปผลงาน</span><span class="ts">ผลงาน</span><small>จำนวนสัตว์</small></button>`;
+  const isSum=day===DATA.length, isHeads=day===DATA.length+1, isStat=day===DATA.length+2;
+  ["grid","coord"].forEach(id=>document.getElementById(id).hidden=isSum||isHeads||isStat);
   document.getElementById("heads").hidden=!isHeads;
   document.getElementById("rwrap").hidden=!isSum;
+  document.getElementById("stats").hidden=!isStat;
+  document.querySelector(".controls").hidden=isStat;document.querySelector(".legend").hidden=isStat;
+  if(isStat){document.getElementById("finder").hidden=true;renderStats();return}
   if(isSum){renderRoster();return}
   if(isHeads){document.querySelectorAll("#filters button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filt));
     const n=DATA.reduce((a,d)=>a+headsOf(d).reduce((s,x)=>s+x.small.length+x.large.length,0),0);
@@ -464,6 +535,63 @@ function render(){
     f.innerHTML=found.length?`<b>พบ “${esc(q)}” ${found.length} ตำแหน่ง</b><ul>${found.map(x=>`<li>${x}</li>`).join("")}</ul>`:`<b>ไม่พบ “${esc(q)}”</b> ลองพิมพ์ชื่อเล่นสั้นลง เช่น “แนท”`;
   }else f.hidden=true;
 }
+
+const STATS={"updated":"10 พ.ย. 2569 เวลา 14:40 น.","pending":[3],"agg":[{"d":1,"s":"s","m":5,"own":11,"n":25,"sp":{"สุนัข":22,"แมว":3},"sx":{"เมีย":11,"ผู้":12},"sv":{"Rabies":25,"Pyrantel":21}},{"d":1,"s":"s","m":4,"own":13,"n":27,"sp":{"สุนัข":27},"sx":{"ผู้":12,"เมีย":15},"sv":{"Rabies":17,"Pyrantel":27}},{"d":1,"s":"s","m":3,"own":12,"n":23,"sp":{"สุนัข":17,"แมว":6},"sx":{"ผู้":11,"เมีย":12},"sv":{"Pyrantel":22,"Rabies":13}},{"d":1,"s":"s","m":2,"own":32,"n":48,"sp":{"สุนัข":44,"แมว":4},"sx":{"เมีย":21,"ผู้":27},"sv":{"Pyrantel":29,"Rabies":42,"DAPP":7}},{"d":1,"s":"s","m":1,"own":18,"n":24,"sp":{"สุนัข":20,"แมว":4},"sx":{"เมีย":8,"ผู้":16},"sv":{"Pyrantel":24,"DAPP":13,"Rabies":18}},{"d":1,"s":"l","m":5,"own":3,"n":8,"sp":{"โค":8},"sx":{"เมีย":3,"ผู้":5},"sv":{"FMD":8,"Lumpy":8,"Ivermec.":5,"Vit. B-com":5,"Vit. AD3E":3,"คอบวม":5,"Alben":3}},{"d":1,"s":"l","m":4,"own":3,"n":17,"sp":{"กระบือ":15,"โค":2},"sx":{"เมีย":10,"ผู้":7},"sv":{"คอบวม":14,"Vit. AD3E":3,"FMD":15,"Alben":2,"Lumpy":2,"Vit. B-com":1}},{"d":1,"s":"l","m":3,"own":3,"n":12,"sp":{"โค":12},"sx":{"เมีย":9,"ผู้":3},"sv":{"FMD":12,"Lumpy":12,"Ivermec.":12,"Vit. B-com":5,"Vit. AD3E":7}},{"d":1,"s":"l","m":2,"own":4,"n":12,"sp":{"โค":10,"กระบือ":2},"sx":{"ผู้":9,"เมีย":3},"sv":{"FMD":12,"Lumpy":12,"Ivermec.":12,"Vit. B-com":6,"Vit. AD3E":3,"คอบวม":2}},{"d":1,"s":"l","m":1,"own":6,"n":12,"sp":{"โค":11,"กระบือ":1},"sx":{"เมีย":7,"ผู้":5},"sv":{"FMD":9,"Lumpy":8,"Ivermec.":5,"Vit. AD3E":6,"Vit. B-com":4,"Alben":2,"คอบวม":1}},{"d":2,"s":"s","m":5,"own":14,"n":27,"sp":{"สุนัข":12,"แมว":15},"sx":{"ผู้":14,"เมีย":13},"sv":{"Rabies":24,"Pyrantel":21,"FVR-CP":2}},{"d":2,"s":"s","m":4,"own":9,"n":16,"sp":{"สุนัข":10,"แมว":6},"sx":{"ผู้":4,"เมีย":12},"sv":{"Rabies":16,"Pyrantel":15}},{"d":2,"s":"s","m":3,"own":3,"n":6,"sp":{"สุนัข":5,"ไม่ระบุ":1},"sx":{"ผู้":2,"เมีย":4},"sv":{"Rabies":5,"Pyrantel":6}},{"d":2,"s":"s","m":2,"own":12,"n":23,"sp":{"สุนัข":20,"แมว":3},"sx":{"ผู้":18,"เมีย":5},"sv":{"Rabies":20,"Pyrantel":18}},{"d":2,"s":"s","m":1,"own":16,"n":27,"sp":{"สุนัข":20,"แมว":7},"sx":{"ผู้":20,"เมีย":7},"sv":{"Rabies":24,"Pyrantel":20}},{"d":2,"s":"l","m":5,"own":3,"n":16,"sp":{"โค":15,"ไม่ระบุ":1},"sx":{"เมีย":14,"ผู้":1},"sv":{"FMD":11,"Lumpy":3,"Ivermec.":13,"Vit. B-com":8,"Vit. AD3E":7,"Alben":4}},{"d":2,"s":"l","m":4,"own":4,"n":11,"sp":{"โค":11},"sx":{"เมีย":9,"ผู้":2},"sv":{"Alben":7,"FMD":8,"Lumpy":6,"Ivermec.":3,"Vit. B-com":7,"Vit. AD3E":7}},{"d":2,"s":"l","m":3,"own":4,"n":11,"sp":{"โค":8,"กระบือ":3},"sx":{"เมีย":10,"ผู้":1},"sv":{"Alben":6,"FMD":7,"Lumpy":7,"Ivermec.":6,"Vit. B-com":6,"Vit. AD3E":6,"คอบวม":3}},{"d":2,"s":"l","m":2,"own":5,"n":9,"sp":{"โค":9},"sx":{"ผู้":3,"เมีย":6},"sv":{"FMD":8,"Lumpy":8,"Ivermec.":3,"Vit. B-com":5,"Vit. AD3E":3,"Alben":1}},{"d":2,"s":"l","m":1,"own":4,"n":10,"sp":{"โค":10},"sx":{"เมีย":6,"ผู้":4},"sv":{"FMD":8,"Vit. B-com":2,"Lumpy":4,"Vit. AD3E":1,"Ivermec.":1,"Alben":5}}]};
+const SVL={"Rabies":["พิษสุนัขบ้า","Rabies"],"Pyrantel":["ถ่ายพยาธิ","Pyrantel"],"DAPP":["วัคซีนรวมสุนัข","DAPP"],"HDP Pi/L":["วัคซีนรวมสุนัข","DHPPi/L"],"FVR -CP":["วัคซีนรวมแมว","FVRCP"],"FVR-CP":["วัคซีนรวมแมว","FVRCP"],"HCPCh":["วัคซีนรวมแมว","HCPCh"],
+  "FMD":["ปากและเท้าเปื่อย","FMD"],"Lumpy":["ลัมปีสกิน","LSD"],"คอบวม":["คอบวม","HS"],"Alben":["ถ่ายพยาธิ","Albendazole"],"Ivermec.":["ถ่ายพยาธิ/เห็บ","Ivermectin"],"Vit. B-com":["วิตามินบีรวม","B-com"],"Vit. AD3E":["วิตามิน","AD3E"]};
+const SPC={"สุนัข":"var(--sky)","แมว":"#8B6FD6","โค":"var(--grass)","กระบือ":"#5B6B7C","ไม่ระบุ":"var(--muted)"};
+let stDay=0;
+function stAgg(list){const o={n:0,own:0,sp:{},sx:{},sv:{}};list.forEach(a=>{o.n+=a.n;o.own+=a.own;["sp","sx","sv"].forEach(k=>{for(const x in a[k])o[k][x]=(o[k][x]||0)+a[k][x]})});return o}
+function renderStats(){
+  const days=[...new Set(STATS.agg.map(a=>a.d))];
+  const L=STATS.agg.filter(a=>!stDay||a.d===stDay);
+  const S=stAgg(L.filter(a=>a.s==="s")), B=stAgg(L.filter(a=>a.s==="l"));
+  const N=S.n+B.n, f=n=>n.toLocaleString("th-TH");
+  const spTxt=o=>Object.entries(o.sp).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k} ${f(v)}`).join(" · ");
+  document.getElementById("summary").innerHTML=`<span>${stDay?DTAB[stDay-1]:"ทุกวัน"}: <strong>${f(N)}</strong> ตัว</span><span style="color:var(--sky)">สัตว์เล็ก <strong>${f(S.n)}</strong></span><span style="color:var(--grass)">สัตว์ใหญ่ <strong>${f(B.n)}</strong></span><span>เจ้าของ <strong>${f(S.own+B.own)}</strong> ราย</span>`;
+  const bars=(o,col)=>{const E=Object.entries(o.sv).sort((a,b)=>b[1]-a[1]);if(!E.length)return '<div class="st-note">ยังไม่มีข้อมูล</div>';const mx=Math.max(...E.map(e=>e[1]));
+    return `<div class="bars">${E.map(([k,v])=>{const l=SVL[k]||[k,""];return `<div class="bar" style="--c:${col}"><span class="lab">${l[0]} <small>${l[1]&&l[1]!==l[0]?"("+l[1]+")":""}</small></span><span class="num">${f(v)}</span><span class="tr"><i style="width:${v/mx*100}%"></i></span></div>`}).join("")}</div>`};
+  const mix=o=>{const E=Object.entries(o.sp).sort((a,b)=>b[1]-a[1]),t=o.n||1;const sx=o.sx,m=sx["ผู้"]||0,w=sx["เมีย"]||0;
+    return `<div class="mix">${E.map(([k,v])=>`<i style="width:${v/t*100}%;background:${SPC[k]||"var(--muted)"}" title="${k} ${v}"></i>`).join("")}</div>
+    <div class="mixlg">${E.map(([k,v])=>`<span><span class="dot" style="background:${SPC[k]||"var(--muted)"}"></span>${k}<b>${f(v)}</b></span>`).join("")}<span>♂ ผู้<b>${f(m)}</b></span><span>♀ เมีย<b>${f(w)}</b></span></div>`};
+  const rows=[];let T={s:0,l:0,os:0,ol:0};
+  days.filter(d=>!stDay||d===stDay).forEach(d=>{
+    if(!stDay)rows.push(`<tr class="dayrow"><td colspan="5">${DATES[d-1]||("วันที่ "+d)}</td></tr>`);
+    const ms=[...new Set(STATS.agg.filter(a=>a.d===d).map(a=>a.m))].sort((a,b)=>a-b);
+    ms.forEach(m=>{const g=s=>STATS.agg.find(a=>a.d===d&&a.m===m&&a.s===s)||{n:0,own:0};const a=g("s"),b=g("l");T.s+=a.n;T.l+=b.n;T.os+=a.own;T.ol+=b.own;
+      const place=((LOC[d-1]||[])[m-1]||{}).place||"";
+      rows.push(`<tr><td>โมบาย ${m}${place?`<br><small style="color:var(--muted)">${esc(place)}</small>`:""}</td><td class="s">${f(a.n)}</td><td class="l">${f(b.n)}</td><td><b>${f(a.n+b.n)}</b></td><td>${f(a.own+b.own)}</td></tr>`)})});
+  rows.push(`<tr class="tot"><td>รวม</td><td class="s">${f(T.s)}</td><td class="l">${f(T.l)}</td><td>${f(T.s+T.l)}</td><td>${f(T.os+T.ol)}</td></tr>`);
+  const ORD={s:["Rabies","Pyrantel","DAPP","HDP Pi/L","FVR -CP","FVR-CP","HCPCh"],l:["FMD","Lumpy","คอบวม","Alben","Ivermec.","Vit. B-com","Vit. AD3E"]};
+  const useTbl=(side,title,col)=>{const LL=L.filter(a=>a.s===side);const tot=stAgg(LL).sv;
+    const keys=[...ORD[side].filter(k=>tot[k]),...Object.keys(tot).filter(k=>!ORD[side].includes(k))];
+    if(!keys.length)return "";
+    const body=[];days.filter(d=>!stDay||d===stDay).forEach(d=>{
+      if(!stDay)body.push(`<tr class="dayrow"><td>${DTAB[d-1]}</td><td colspan="${keys.length+1}"></td></tr>`);
+      LL.filter(a=>a.d===d).sort((a,b)=>a.m-b.m).forEach(a=>body.push(`<tr><td>โมบาย ${a.m}</td><td>${f(a.n)}</td>${keys.map(k=>`<td class="${a.sv[k]?"":"z"}">${a.sv[k]?f(a.sv[k]):"–"}</td>`).join("")}</tr>`))});
+    body.push(`<tr class="tot"><td>รวม</td><td>${f(stAgg(LL).n)}</td>${keys.map(k=>`<td>${f(tot[k])}</td>`).join("")}</tr>`);
+    return `<div class="st-tbl st-use"><h3 style="color:${col}">${title}</h3><div class="hint">จำนวนตัวที่ได้รับแต่ละรายการ (โดส)<span class="sw"> · เลื่อนตารางไปทางขวา →</span></div><table><thead><tr><th>โมบาย</th><th>สัตว์<small>ตัว</small></th>${keys.map(k=>{const l=SVL[k]||[k,k];return `<th>${l[1]}<small>${l[0]}</small></th>`}).join("")}</tr></thead><tbody>${body.join("")}</tbody></table></div>`};
+  const pend=(STATS.pending||[]).filter(d=>!stDay||d===stDay);
+  document.getElementById("stats").innerHTML=`
+  <div class="st-head"><div><div class="ht">📊 สรุปผลการให้บริการ</div><div class="hd2">อัปเดตล่าสุด ${STATS.updated} · นับจากทะเบียนสัตว์ในชีตของแต่ละโม</div></div>
+    <div class="st-days" role="group" aria-label="เลือกวัน"><button data-sd="0" aria-pressed="${!stDay}">ทุกวัน</button>${DTAB.map((t,i)=>`<button data-sd="${i+1}" aria-pressed="${stDay===i+1}" ${days.includes(i+1)?"":"disabled"}><span class="tl">${t}</span><span class="ts" hidden>${DSHORT[i].replace(" 69","")}</span></button>`).join("")}</div></div>
+  <div class="kpis">
+    <div class="kpi"><span class="k">สัตว์ที่ให้บริการ</span><span class="v">${f(N)}</span><span class="sub">ตัว</span></div>
+    <div class="kpi"><span class="k">เจ้าของสัตว์</span><span class="v">${f(S.own+B.own)}</span><span class="sub">ราย</span></div>
+    <div class="kpi s"><span class="k">🐶 สัตว์เล็ก</span><span class="v">${f(S.n)}</span><span class="sub">${spTxt(S)||"–"}</span></div>
+    <div class="kpi l"><span class="k">🐄 สัตว์ใหญ่</span><span class="v">${f(B.n)}</span><span class="sub">${spTxt(B)||"–"}</span></div>
+  </div>
+  <div class="st-two">
+    <div class="st-card"><h3>🐶 สัตว์เล็ก <small>${f(S.n)} ตัว · ${f(S.own)} ราย</small></h3>${mix(S)}${bars(S,"var(--sky)")}</div>
+    <div class="st-card"><h3>🐄 สัตว์ใหญ่ <small>${f(B.n)} ตัว · ${f(B.own)} ราย</small></h3>${mix(B)}${bars(B,"var(--grass)")}</div>
+  </div>
+  <div class="st-tbl"><table><thead><tr><th>โมบาย</th><th>🐶 เล็ก</th><th>🐄 ใหญ่</th><th>รวม</th><th>เจ้าของ</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>
+  ${useTbl("s","🐶 เวชภัณฑ์ที่ใช้ — สัตว์เล็ก","var(--sky)")}
+  ${useTbl("l","🐄 เวชภัณฑ์ที่ใช้ — สัตว์ใหญ่","var(--grass)")}
+  ${pend.length?`<div class="st-note">⏳ ${pend.map(d=>DTAB[d-1]).join(", ")}: ยังไม่มีข้อมูล (ชีตยังไม่ได้เปิดแชร์หรือยังไม่ได้กรอก)</div>`:""}
+  <div class="st-note">ตัวเลขบริการนับเป็นจำนวนตัวที่ได้รับ 1 ตัวอาจได้หลายรายการ · ไม่แสดงข้อมูลส่วนตัวของเจ้าของ</div>`;
+}
+document.getElementById("stats").addEventListener("click",e=>{const b=e.target.closest("button[data-sd]");if(!b||b.disabled)return;stDay=+b.dataset.sd;renderStats()});
 document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;day=+b.dataset.i;save();render()});
 document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;filt=b.dataset.f;save();render()});
 document.getElementById("q").addEventListener("input",e=>{q=e.target.value.trim();render()});
@@ -722,6 +850,7 @@ function makePdf(canvases){
 let downloads=null;
 function toast(t){const el=document.getElementById("toast");el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2600)}
 function syncDl(){const sh=document.getElementById("saveHeads");if(sh)sh.hidden=!downloads;const box=document.getElementById("dl");box.hidden=!downloads;if(!downloads)return;
+  if(day===DATA.length+2){box.hidden=true;return}
   const isSum=day>=DATA.length; box.querySelectorAll("[data-dl=png],[data-dl=pdf]").forEach(b=>b.hidden=isSum)}
 const _render=render; render=function(){_render();syncDl()};
 document.getElementById("dl").addEventListener("click",async e=>{
