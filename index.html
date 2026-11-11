@@ -7,7 +7,7 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>แบ่งโม สพอ. 2569</title>
+<title>โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน ประจำปีการศึกษา 2569</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,7 +82,10 @@ h1,h2,.tabs button,.summary strong,.lbl{font-family:var(--f-display)}
 header.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:28px}
 .brand{display:flex;align-items:center;gap:14px;min-width:0}
 .logo{flex:none;width:54px;height:54px;border-radius:18px;display:grid;place-items:center;font-size:28px;background:color-mix(in srgb,var(--sky) 14%,var(--glass-strong));border:1px solid var(--glass-border);box-shadow:0 6px 16px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6)}
-h1{font-size:clamp(22px,5vw,32px);line-height:1.15;margin:0;font-weight:600;text-wrap:balance}
+h1{font-size:clamp(20px,3.2vw,30px);line-height:1.2;margin:0;font-weight:600;text-wrap:balance}
+.h1a{display:block}
+.h1b{display:block;font-size:.62em;font-weight:500;color:var(--sky);margin-top:2px}
+
 .lede{margin:2px 0 0;color:var(--muted);font-size:14px}
 .theme{display:inline-flex;padding:3px;border-radius:999px;gap:2px;background:var(--field);border:1px solid var(--line);flex:none}
 .theme button{appearance:none;border:0;background:transparent;color:var(--muted);width:34px;height:34px;padding:0;border-radius:999px;cursor:pointer;display:grid;place-items:center;transition:background .15s,color .15s}
@@ -220,7 +223,10 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
   .cols>div{padding:6px 6px}
   .p{font-size:13.5px;padding:1px 7px}
 }
-@media (max-width:430px){.lede{display:none} h1{font-size:18px;white-space:nowrap}}
+@media (max-width:430px){.lede{display:none} h1{font-size:16px;line-height:1.25;white-space:normal}}
+@media (max-width:560px){.brand{min-width:0;flex:1} h1{font-size:18px;line-height:1.25}}
+@media (max-width:430px){h1{font-size:16px!important}}
+@media (max-width:380px){h1{font-size:14.5px!important} .logo{width:34px!important;height:34px!important;font-size:18px!important}}
 @media (max-width:640px){
   .wrap{gap:12px;padding-block:10px 40px}
   .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:5px;border-radius:22px;
@@ -305,6 +311,13 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
 @media (max-width:640px){.st-use .sw{display:inline}}
 .st-use td:first-child,.st-use th:first-child{position:sticky;left:0;z-index:1;background:var(--glass-strong)}
 .st-use thead th:first-child{z-index:2}
+.st-right{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.st-dl{display:flex;gap:6px}
+.st-dl[hidden]{display:none}
+.st-dl button{appearance:none;display:inline-flex;align-items:center;gap:6px;font:500 13.5px var(--f-body);color:var(--grass);padding:7px 13px;border-radius:999px;cursor:pointer;background:var(--glass-strong);border:1px solid color-mix(in srgb,var(--grass) 30%,transparent)}
+.st-dl button:disabled{opacity:.5;cursor:progress}
+.st-dl svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:640px){.st-right{width:100%;align-items:stretch}.st-dl button{flex:1;justify-content:center;padding:9px 6px}}
 .st-note{font-size:12.5px;color:var(--muted);padding:0 6px}
 @media (max-width:640px){
   .kpis{grid-template-columns:1fr 1fr;gap:8px}
@@ -347,7 +360,7 @@ table.roster{border-collapse:collapse;width:100%;min-width:880px;font-size:13.5p
 <div class="wrap">
   <header class="top">
     <div class="brand"><div class="logo" aria-hidden="true">🚐</div><div>
-      <h1>แบ่งโม สพอ. 2569</h1>
+      <h1><span class="h1a">โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน</span><span class="h1b">ประจำปีการศึกษา 2569</span></h1>
       <p class="lede">ตารางหน้าที่โมบายสัตว์เล็ก–สัตว์ใหญ่ 3 วัน</p>
     </div></div>
     <div class="theme" role="group" aria-label="โหมดสี">
@@ -485,7 +498,7 @@ function renderHeads(){
     ${DATA.map(block).join("")}
     <textarea id="headsTxt" readonly hidden></textarea>`;
   document.getElementById("copyHeads").onclick=async()=>{
-    const t="📣 ประกาศรายชื่อหัวหน้าโม สพอ. 2569\n"+DATA.map(d=>"\n━━━━━━━━━━\n"+headsText(d).replace(/^📣 ประกาศหัวหน้าโม\n/,"")).join("\n");
+    const t="📣 ประกาศรายชื่อหัวหน้าโม\nโครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน ประจำปีการศึกษา 2569\n"+DATA.map(d=>"\n━━━━━━━━━━\n"+headsText(d).replace(/^📣 ประกาศหัวหน้าโม\n/,"")).join("\n");
     try{await navigator.clipboard.writeText(t);toast("คัดลอกประกาศแล้ว")}
     catch(e){const ta=document.getElementById("headsTxt");ta.value=t;ta.hidden=false;ta.select();toast("เลือกข้อความไว้แล้ว กดคัดลอกได้เลย")}
   };
@@ -574,7 +587,8 @@ function renderStats(){
   const pend=(STATS.pending||[]).filter(d=>!stDay||d===stDay);
   document.getElementById("stats").innerHTML=`
   <div class="st-head"><div><div class="ht">📊 สรุปผลการให้บริการ</div><div class="hd2">อัปเดตล่าสุด ${STATS.updated} · นับจากทะเบียนสัตว์ในชีตของแต่ละโม</div></div>
-    <div class="st-days" role="group" aria-label="เลือกวัน"><button data-sd="0" aria-pressed="${!stDay}">ทุกวัน</button>${DTAB.map((t,i)=>`<button data-sd="${i+1}" aria-pressed="${stDay===i+1}" ${days.includes(i+1)?"":"disabled"}><span class="tl">${t}</span><span class="ts" hidden>${DSHORT[i].replace(" 69","")}</span></button>`).join("")}</div></div>
+    <div class="st-right"><div class="st-days" role="group" aria-label="เลือกวัน"><button data-sd="0" aria-pressed="${!stDay}">ทุกวัน</button>${DTAB.map((t,i)=>`<button data-sd="${i+1}" aria-pressed="${stDay===i+1}" ${days.includes(i+1)?"":"disabled"}><span class="tl">${t}</span><span class="ts" hidden>${DSHORT[i].replace(" 69","")}</span></button>`).join("")}</div>
+    <div class="st-dl" ${downloads?"":"hidden"}><button type="button" data-sdl="png"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8.5"/></svg><span>บันทึกรูปภาพ</span></button><button type="button" data-sdl="pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h7l4.5 4.5v12.5H7z"/><path d="M14 3.5V8h4.5M9.5 13h6M9.5 16.5h4"/></svg><span>บันทึก PDF</span></button></div></div></div>
   <div class="kpis">
     <div class="kpi"><span class="k">สัตว์ที่ให้บริการ</span><span class="v">${f(N)}</span><span class="sub">ตัว</span></div>
     <div class="kpi"><span class="k">เจ้าของสัตว์</span><span class="v">${f(S.own+B.own)}</span><span class="sub">ราย</span></div>
@@ -613,7 +627,7 @@ async function drawDay(di){
   const FD='"Mitr","IBM Plex Sans Thai",sans-serif', FB='"IBM Plex Sans Thai",sans-serif';
   g.fillStyle="#fff"; g.fillRect(0,0,W,H);
   g.fillStyle="#10233A"; g.font=`600 28px ${FD}`; g.textBaseline="alphabetic";
-  g.fillText("แบ่งโม สพอ. 2569 · "+d.day, M, M+30);
+  g.fillText("โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน ประจำปีการศึกษา 2569 · "+d.day, M, M+30);
   g.font=`14px ${FB}`; g.fillStyle="#4A5E74"; const sub=`${n} โมบาย`; g.fillText(sub, M, M+54);
   let lx=M+g.measureText(sub).width+30; [["1","ปี 1"],["2","ปี 2"],["3","ปี 3"],["5","ปี 5"]].forEach(([y,t])=>{g.fillStyle=YC[y];g.beginPath();g.arc(lx,M+49,5,0,7);g.fill();g.fillStyle="#10233A";g.fillText(`${t} (#${y})`,lx+10,M+54);lx+=g.measureText(`${t} (#${y})`).width+34});
   const x0=M, y0=top;
@@ -704,9 +718,10 @@ async function drawDayUI(di,opt={}){
   let y=M; glass(M,y,W-M*2,headH,28);
   const lg=g.createLinearGradient(M+20,y+22,M+76,y+78);lg.addColorStop(0,rgba(T.sky.startsWith("#")?T.sky:"#2479CF",.18));lg.addColorStop(1,rgba(T.sky.startsWith("#")?T.sky:"#2479CF",.08));
   rr(g,M+20,y+24,58,58,18);g.fillStyle=lg;g.fill();g.strokeStyle=T.border;g.stroke();g.font=`30px ${FB}`;g.textAlign="center";g.fillText("🚐",M+49,y+64);g.textAlign="left";
-  g.fillStyle=T.ink;g.font=`600 30px ${FD}`;g.fillText("แบ่งโม สพอ. 2569",M+96,y+52);
-  g.fillStyle=T.sky;g.font=`500 20px ${FD}`;const dl=d.day;const dw=g.measureText(dl).width;g.fillText(dl,M+96,y+84);
-  g.fillStyle=T.muted;g.font=`15px ${FB}`;if(!ONE)g.fillText(`· ${n} โมบาย`,M+96+dw+8,y+84);
+  {const av=W-M*2-116-(ONE?0:340);let fs=26;g.font=`600 ${fs}px ${FD}`;while(g.measureText("โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน").width>av&&fs>13){fs-=.5;g.font=`600 ${fs}px ${FD}`}
+  g.fillStyle=T.ink;g.fillText("โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน",M+96,y+44);g.fillStyle=T.muted;g.font=`500 15px ${FD}`;g.fillText("ประจำปีการศึกษา 2569",M+96,y+66);}
+  g.fillStyle=T.sky;g.font=`500 20px ${FD}`;const dl=d.day;const dw=g.measureText(dl).width;g.fillText(dl,M+96,y+94);
+  g.fillStyle=T.muted;g.font=`15px ${FB}`;if(!ONE)g.fillText(`· ${n} โมบาย`,M+96+dw+8,y+94);
   // legend pills right
   if(ONE){
     let lx=M+96, ly=y+102;
@@ -788,7 +803,7 @@ async function drawHeadsUI(){
   let y=M; glass(M,y,W-M*2,headH,26);
   g.font=`30px ${FB}`;g.fillText("📣",M+22,y+60);
   g.fillStyle=T.ink;g.font=`600 28px ${FD}`;g.fillText("ประกาศรายชื่อหัวหน้าโม",M+70,y+50);
-  g.fillStyle=T.muted;g.font=`15px ${FB}`;g.fillText("สพอ. 2569 · "+DTAB.join(" / "),M+70,y+80);
+  g.fillStyle=T.muted;g.font=`15px ${FB}`;g.fillText("โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน ประจำปีการศึกษา 2569 · "+DTAB.join(" / "),M+70,y+80);
   y+=headH+G;
   DATA.forEach((d,di)=>{
     g.font=`600 12px ${FB}`;const lt=DTAB[di]||"",lw=g.measureText(lt).width+22;rr(g,M,y+6,lw,24,12);g.fillStyle=rgba(hx(T.sky),.12);g.fill();g.strokeStyle=rgba(hx(T.sky),.3);g.stroke();
@@ -849,8 +864,117 @@ function makePdf(canvases){
 }
 let downloads=null;
 function toast(t){const el=document.getElementById("toast");el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2600)}
+
+async function drawStatsUI(parts){
+  try{await document.fonts.load('500 20px "Mitr"');await document.fonts.load('500 16px "IBM Plex Sans Thai"');await document.fonts.ready}catch(e){}
+  const dark=matchMedia("(prefers-color-scheme: dark)").matches&&document.documentElement.dataset.theme!=="light"||document.documentElement.dataset.theme==="dark";
+  const T={ink:tok("--ink"),muted:tok("--muted"),bg:tok("--bg"),sky:tok("--sky"),grass:tok("--grass"),f1:tok("--f1"),f2:tok("--f2"),f4:tok("--f4"),f3:tok("--f3"),border:tok("--glass-border")};
+  const hx=c=>c&&c.startsWith("#")?c:"#2479CF";
+  const card=dark?"rgba(20,36,60,.80)":"rgba(255,255,255,.78)", field=dark?"rgba(6,14,28,.45)":"rgba(255,255,255,.9)", line=dark?"rgba(255,255,255,.10)":"rgba(16,35,58,.10)", track=dark?"rgba(255,255,255,.10)":"rgba(16,35,58,.07)";
+  const FD='"Mitr","IBM Plex Sans Thai",sans-serif', FB='"IBM Plex Sans Thai",sans-serif';
+  const SPX={"สุนัข":T.sky,"แมว":"#8B6FD6","โค":T.grass,"กระบือ":"#5B6B7C","ไม่ระบุ":T.muted};
+  const W=1240,M=40,G=16,IW=W-M*2,f=n=>n.toLocaleString("th-TH");
+  const days=[...new Set(STATS.agg.map(a=>a.d))].filter(d=>!stDay||d===stDay);
+  const L=STATS.agg.filter(a=>!stDay||a.d===stDay);
+  const S=stAgg(L.filter(a=>a.s==="s")), B=stAgg(L.filter(a=>a.s==="l"));
+  const ORD={s:["Rabies","Pyrantel","DAPP","HDP Pi/L","FVR -CP","FVR-CP","HCPCh"],l:["FMD","Lumpy","คอบวม","Alben","Ivermec.","Vit. B-com","Vit. AD3E"]};
+  // ---- layout pass: compute height
+  const tmp=document.createElement("canvas").getContext("2d");
+  const headH=110,kpiH=118,barRow=44;
+  const svE=o=>Object.entries(o.sv).sort((a,b)=>b[1]-a[1]);
+  const sideH=Math.max(svE(S).length,svE(B).length,1)*barRow+120;
+  const RH=40,HH=50;
+  const mobRows=[];days.forEach(d=>{if(!stDay)mobRows.push({k:"day",d});[...new Set(STATS.agg.filter(a=>a.d===d).map(a=>a.m))].sort((a,b)=>a-b).forEach(m=>mobRows.push({k:"m",d,m}))});mobRows.push({k:"tot"});
+  const tblH=n=>HH+n*RH+60;
+  const useKeys=side=>{const tot=stAgg(L.filter(a=>a.s===side)).sv;return [...ORD[side].filter(k=>tot[k]),...Object.keys(tot).filter(k=>!ORD[side].includes(k))]};
+  const useRows=side=>{const r=[];days.forEach(d=>{if(!stDay)r.push({k:"day",d});L.filter(a=>a.s===side&&a.d===d).sort((a,b)=>a.m-b.m).forEach(a=>r.push({k:"m",a}))});r.push({k:"tot"});return r};
+  const P=new Set(parts||["sum","mob","use_s","use_l"]);
+  let H=M+headH+G;
+  if(P.has("sum"))H+=kpiH+G+sideH+G;
+  if(P.has("mob"))H+=tblH(mobRows.length)+G;
+  ["s","l"].forEach(sd=>{if(P.has("use_"+sd)&&useKeys(sd).length)H+=tblH(useRows(sd).length)+G});
+  H+=M-G;
+  const SC=pickScale(W,H),c=document.createElement("canvas");c.width=Math.round(W*SC);c.height=Math.round(H*SC);const g=c.getContext("2d");g.scale(SC,SC);
+  g.fillStyle=T.bg;g.fillRect(0,0,W,H);
+  const blob=(x,y,r,col,a)=>{const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,rgba(hx(col),a));gr.addColorStop(1,rgba(hx(col),0));g.fillStyle=gr;g.fillRect(0,0,W,H)};
+  blob(0,0,W*.7,T.f2,dark?.6:.75);blob(W,H*.3,W*.6,T.f1,dark?.35:.4);blob(W*.2,H,W*.6,T.f4,dark?.3:.35);blob(W*.85,H*.85,W*.35,T.f3,dark?.18:.25);
+  const glass=(x,y,w,h,r)=>{g.save();g.shadowColor=dark?"rgba(0,0,0,.35)":"rgba(30,90,170,.12)";g.shadowBlur=24;g.shadowOffsetY=8;rr(g,x,y,w,h,r);g.fillStyle=card;g.fill();g.restore();rr(g,x+.5,y+.5,w-1,h-1,r);g.strokeStyle=T.border;g.lineWidth=1;g.stroke()};
+  const txt=(t,x,y,font,col,al)=>{g.font=font;g.fillStyle=col;g.textAlign=al||"left";g.fillText(t,x,y);g.textAlign="left"};
+  // header
+  let y=M;glass(M,y,IW,headH,26);
+  txt("📊",M+24,y+64,`32px ${FB}`,T.ink);
+  txt("สรุปผลการให้บริการ",M+76,y+50,`600 30px ${FD}`,T.ink);
+  txt(`โครงการบริการวิชาการทางสัตวแพทย์เพื่อชุมชน ประจำปีการศึกษา 2569 · ${stDay?DATES[stDay-1]:"รวมทุกวัน ("+DTAB.join(" / ")+")"}`,M+76,y+80,`16px ${FB}`,T.muted);
+  txt(`อัปเดต ${STATS.updated}`,W-M-24,y+50,`14px ${FB}`,T.muted,"right");
+  y+=headH+G;
+  if(P.has("sum")){
+    const kw=(IW-G*3)/4;
+    const spT=o=>Object.entries(o.sp).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k} ${f(v)}`).join(" · ")||"–";
+    [["สัตว์ที่ให้บริการ",f(S.n+B.n),"ตัว",T.ink],["เจ้าของสัตว์",f(S.own+B.own),"ราย",T.ink],["🐶 สัตว์เล็ก",f(S.n),spT(S),T.sky],["🐄 สัตว์ใหญ่",f(B.n),spT(B),T.grass]].forEach(([k,v,sub,col],i)=>{
+      const x=M+i*(kw+G);glass(x,y,kw,kpiH,22);txt(k,x+20,y+32,`600 14px ${FB}`,T.muted);txt(v,x+20,y+76,`500 40px ${FD}`,col);txt(sub,x+20,y+102,`13.5px ${FB}`,T.muted)});
+    y+=kpiH+G;
+    const cw=(IW-G)/2;
+    [[S,"🐶 สัตว์เล็ก",T.sky],[B,"🐄 สัตว์ใหญ่",T.grass]].forEach(([o,title,col],i)=>{
+      const x=M+i*(cw+G);glass(x,y,cw,sideH,24);
+      txt(title,x+22,y+38,`500 20px ${FD}`,T.ink);txt(`${f(o.n)} ตัว · ${f(o.own)} ราย`,x+cw-22,y+38,`14px ${FB}`,T.muted,"right");
+      const E=Object.entries(o.sp).sort((a,b)=>b[1]-a[1]),t=o.n||1;let bx=x+22;const bw=cw-44;
+      rr(g,bx,y+54,bw,12,6);g.fillStyle=track;g.fill();g.save();rr(g,bx,y+54,bw,12,6);g.clip();E.forEach(([k,v])=>{const w=v/t*bw;g.fillStyle=SPX[k]||T.muted;g.fillRect(bx,y+54,w,12);bx+=w});g.restore();
+      let lx=x+22;g.font=`13.5px ${FB}`;[...E.map(([k,v])=>[k,v,SPX[k]||T.muted]),["♂ ผู้",o.sx["ผู้"]||0,null],["♀ เมีย",o.sx["เมีย"]||0,null]].forEach(([k,v,cc])=>{
+        if(cc){g.fillStyle=cc;g.beginPath();g.arc(lx+5,y+86,5,0,7);g.fill();lx+=14}
+        txt(k,lx,y+91,`13.5px ${FB}`,T.muted);lx+=g.measureText(k).width+6;txt(f(v),lx,y+91,`500 15px ${FD}`,T.ink);lx+=g.measureText(f(v)).width+18});
+      let by=y+118;const sv=svE(o),mx=Math.max(1,...sv.map(e=>e[1]));
+      sv.forEach(([k,v])=>{const l=SVL[k]||[k,""];txt(l[0],x+22,by+14,`15px ${FB}`,T.ink);g.font=`15px ${FB}`;const lw=g.measureText(l[0]).width;if(l[1]&&l[1]!==l[0])txt("("+l[1]+")",x+22+lw+6,by+14,`12.5px ${FB}`,T.muted);
+        txt(f(v),x+cw-22,by+15,`500 17px ${FD}`,T.ink,"right");rr(g,x+22,by+24,bw,8,4);g.fillStyle=track;g.fill();rr(g,x+22,by+24,Math.max(8,v/mx*bw),8,4);g.fillStyle=col;g.fill();by+=barRow});
+      if(!sv.length)txt("ยังไม่มีข้อมูล",x+22,by+14,`14px ${FB}`,T.muted);
+    });
+    y+=sideH+G;
+  }
+  const table=(title,col,cols,rows,hint)=>{const h=tblH(rows.length);glass(M,y,IW,h,24);
+    txt(title,M+22,y+34,`500 19px ${FD}`,col);if(hint)txt(hint,W-M-22,y+34,`13px ${FB}`,T.muted,"right");
+    let ty=y+50;const fw=cols[0].w,rest=(IW-fw)/(cols.length-1);const cx=i=>i===0?M:M+fw+(i-1)*rest;
+    g.fillStyle=dark?"rgba(255,255,255,.04)":"rgba(255,255,255,.6)";g.fillRect(M+1,ty,IW-2,HH);
+    cols.forEach((cc,i)=>{if(i===0)txt(cc.t,M+22,ty+31,`500 14px ${FD}`,T.muted);else{txt(cc.t,cx(i)+rest-18,ty+(cc.sub?24:31),`500 14px ${FD}`,cc.col||T.muted,"right");if(cc.sub)txt(cc.sub,cx(i)+rest-18,ty+41,`11.5px ${FB}`,T.muted,"right")}});
+    ty+=HH;
+    rows.forEach(r=>{g.strokeStyle=line;g.beginPath();g.moveTo(M+1,ty+.5);g.lineTo(W-M-1,ty+.5);g.stroke();
+      if(r.bg){g.fillStyle=r.bg;g.fillRect(M+1,ty+1,IW-2,RH-1)}
+      r.cells.forEach((v,i)=>{if(v==null)return;if(i===0)txt(v,M+22,ty+26,r.f0||`15px ${FB}`,r.c0||T.ink);else txt(v,cx(i)+rest-18,ty+26,r.font||`15px ${FB}`,(r.cols&&r.cols[i])||T.ink,"right")});
+      ty+=RH});
+    y+=h+G};
+  const dayBg=rgba(hx(T.sky),dark?.14:.08),totBg=rgba(hx(T.grass),dark?.16:.10);
+  if(P.has("mob")){
+    let tt={s:0,l:0,o:0};
+    const rows=mobRows.map(r=>{
+      if(r.k==="day")return {cells:[DATES[r.d-1]],bg:dayBg,c0:T.sky,f0:`500 15px ${FD}`};
+      if(r.k==="tot")return {cells:["รวม",f(tt.s),f(tt.l),f(tt.s+tt.l),f(tt.o)],bg:totBg,f0:`600 15px ${FD}`,font:`600 16px ${FD}`,cols:[null,T.sky,T.grass,T.ink,T.ink]};
+      const gg=sd=>STATS.agg.find(a=>a.d===r.d&&a.m===r.m&&a.s===sd)||{n:0,own:0};const a=gg("s"),b=gg("l");tt.s+=a.n;tt.l+=b.n;tt.o+=a.own+b.own;
+      const place=((LOC[r.d-1]||[])[r.m-1]||{}).place||"";
+      return {cells:[`โมบาย ${r.m}${place?"  ·  "+place:""}${stDay?"":""}`,f(a.n),f(b.n),f(a.n+b.n),f(a.own+b.own)],cols:[null,T.sky,T.grass,T.ink,T.ink]}});
+    table("🚐 สรุปรายโมบาย",T.ink,[{t:"โมบาย",w:520},{t:"🐶 สัตว์เล็ก",col:T.sky},{t:"🐄 สัตว์ใหญ่",col:T.grass},{t:"รวม (ตัว)"},{t:"เจ้าของ (ราย)"}],rows);
+  }
+  [["s","🐶 เวชภัณฑ์ที่ใช้ — สัตว์เล็ก",T.sky],["l","🐄 เวชภัณฑ์ที่ใช้ — สัตว์ใหญ่",T.grass]].forEach(([sd,title,col])=>{
+    if(!P.has("use_"+sd))return;const keys=useKeys(sd);if(!keys.length)return;
+    const LL=L.filter(a=>a.s===sd),tot=stAgg(LL);
+    const rows=useRows(sd).map(r=>{
+      if(r.k==="day")return {cells:[DTAB[r.d-1]],bg:dayBg,c0:T.sky,f0:`500 15px ${FD}`};
+      if(r.k==="tot")return {cells:["รวม",f(tot.n),...keys.map(k=>f(tot.sv[k]||0))],bg:totBg,f0:`600 15px ${FD}`,font:`600 16px ${FD}`};
+      return {cells:[`โมบาย ${r.a.m}`,f(r.a.n),...keys.map(k=>r.a.sv[k]?f(r.a.sv[k]):"–")],cols:[null,T.ink,...keys.map(k=>r.a.sv[k]?T.ink:T.muted)]}});
+    table(title,col,[{t:"โมบาย",w:200},{t:"สัตว์",sub:"ตัว"},...keys.map(k=>{const l=SVL[k]||[k,k];return {t:l[1],sub:l[0]}})],rows,"จำนวนตัวที่ได้รับแต่ละรายการ (โดส)");
+  });
+  return c;
+}
+document.getElementById("stats").addEventListener("click",async e=>{const b=e.target.closest("button[data-sdl]");if(!b||!downloads)return;
+  const btns=[...document.querySelectorAll(".st-dl button")];btns.forEach(x=>x.disabled=true);
+  const tag=stDay?DSHORT[stDay-1].replace(/\./g,""):"รวม 3 วัน";
+  try{let data,filename;
+    if(b.dataset.sdl==="png"){const c=await drawStatsUI();data=await new Promise(r=>c.toBlob(r,"image/png"));filename=`สรุปผลงาน สพอ. 2569 (${tag}).png`}
+    else{const cs=[await drawStatsUI(["sum"]),await drawStatsUI(["mob"])];
+      for(const sd of ["s","l"]){if(STATS.agg.some(a=>a.s===sd&&(!stDay||a.d===stDay)&&Object.keys(a.sv).length))cs.push(await drawStatsUI(["use_"+sd]))}
+      data=makePdf(cs);filename=`สรุปผลงาน สพอ. 2569 (${tag}).pdf`}
+    const r=await downloads.save({filename,data});toast(r.status==="saved"?"บันทึกไฟล์แล้ว":"ส่งไฟล์แล้ว")}
+  catch(err){const code=err&&err.code;toast(code==="declined"?"ยกเลิกการบันทึก":code==="rate_limited"?"มีหน้าต่างบันทึกเปิดอยู่ ลองอีกครั้งสักครู่":"บันทึกไม่สำเร็จ ลองอีกครั้ง")}
+  finally{btns.forEach(x=>x.disabled=false)}});
 function syncDl(){const sh=document.getElementById("saveHeads");if(sh)sh.hidden=!downloads;const box=document.getElementById("dl");box.hidden=!downloads;if(!downloads)return;
-  if(day===DATA.length+2){box.hidden=true;return}
+  if(day===DATA.length+2){box.hidden=true;const sd=document.querySelector(".st-dl");if(sd)sd.hidden=!downloads;return}
   const isSum=day>=DATA.length; box.querySelectorAll("[data-dl=png],[data-dl=pdf]").forEach(b=>b.hidden=isSum)}
 const _render=render; render=function(){_render();syncDl()};
 document.getElementById("dl").addEventListener("click",async e=>{
